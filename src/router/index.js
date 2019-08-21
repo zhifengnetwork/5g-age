@@ -11,6 +11,12 @@ import EditPassword from '@/pages/login/EditPassword'
 // 首页
 import Home from '@/pages/home/Home'
 
+// 聊天
+import Chat from '@/pages/chat/Chat'
+
+// 通讯录
+import MailList from '@/pages/maillist/MailList'
+
 // 投资记录
 import Investment from '@/pages/investment/Investment'
 // 投资购买
@@ -113,6 +119,29 @@ const router= new Router({
 			component: (resolve) => require(['@/pages/home/Home'],resolve),
 			meta:{requireAuth:true}
 		},
+
+		/**
+		 * 聊天
+		 */
+		{
+			path: '/Chat',
+			name: 'Chat',
+			// component:() => import('@/pages/home/Home'),//按需加载
+			component: (resolve) => require(['@/pages/chat/Chat'],resolve),
+			meta:{requireAuth:true}
+		},
+
+		/**
+		 * 通讯录
+		 */
+		{
+			path: '/MailList',
+			name: 'MailList',
+			// component:() => import('@/pages/home/Home'),//按需加载
+			component: (resolve) => require(['@/pages/maillist/MailList'],resolve),
+			meta:{requireAuth:true}
+		},
+
 
 		/**
 		 * 投资记录

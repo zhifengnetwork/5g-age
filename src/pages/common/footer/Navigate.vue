@@ -2,15 +2,17 @@
      <div class="Navigate">
         <ul>
  			<li>
- 				<router-link exact to="/Home">
-                    <i class="home-icon"></i>
- 					<span class="text">首页</span>
+ 				<router-link exact to="/Chat">
+                    <i class="chat-icon">
+						<span class="num">8</span>
+					</i>
+ 					<span class="text">聊天</span>
  				</router-link>
  			</li>
  			<li>
- 				<router-link to="/Investment">
- 					<i class="investment-icon"></i>
- 					<span class="text">投资记录</span>
+ 				<router-link to="/MailList">
+ 					<i class="mail-list-icon"></i>
+ 					<span class="text">好友</span>
  				</router-link>
  			</li>
  			<li>
@@ -57,34 +59,50 @@
 				align-items center 
 				justify-content center
 				i
-					width 33px
-					height 38px
+					width 44px
+					height 44px
 					margin 3px 0
 					display block
-				.home-icon
-					background url(/static/images/public/home-icon2.png) no-repeat center center
-					background-size 33px 38px
-				.investment-icon
-					background url(/static/images/public/investment-icon2.png) no-repeat center center
-					background-size 33px 38px
+					position relative
+					font-style normal
+				.chat-icon
+					background url(/static/images/public/chat-icon.png) no-repeat center center
+					background-size 44px 44px
+				.mail-list-icon
+					background url(/static/images/public/mail-list-icon.png) no-repeat center center
+					background-size 44px 44px
 				.user-icon
-					background url(/static/images/public/user-icon2.png) no-repeat center center
-					background-size 33px 38px
+					background url(/static/images/public/user-icon.png) no-repeat center center
+					background-size 44px 44px
 				span
-					font-size 28px;
+					font-size 28px
 					color #686868
+				.num
+					width 20px
+					height 20px
+					line-height 20px
+					font-size 16px
+					color #ffffff
+					text-align center
+					border-radius 50%
+					background-color #ff0018
+					position absolute
+					top -5px
+					right -6px
 			.router-link-exact-active
-				.home-icon
-					background url(/static/images/public/home-icon-on2.png) no-repeat center center
-					background-size 33px 38px
-				.investment-icon
-					background url(/static/images/public/investment-icon-on2.png) no-repeat center center
-					background-size 33px 38px
+				.chat-icon
+					background url(/static/images/public/chat-icon-on.png) no-repeat center center
+					background-size 44px 44px
+				.mail-list-icon
+					background url(/static/images/public/mail-list-icon-on.png) no-repeat center center
+					background-size 44px 44px
 				.user-icon
-					background url(/static/images/public/user-icon-on2.png) no-repeat center center
-					background-size 33px 38px
+					background url(/static/images/public/user-icon-on.png) no-repeat center center
+					background-size 44px 44px
 				span
-					color #151515	
+					color #151515
+				.num
+					color #ffffff	
 </style>
 
 
