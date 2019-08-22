@@ -8,98 +8,58 @@
                     </router-link>
                 </div>
                 <div class="user-msg">
-                    <!-- <p class="user-name">{{userData.realname}}</p> -->
+                    <p class="user-name">{{userData.realname}}</p>
                     <p class="user-id">ID:{{userData.id}}</p>
-                    <p class="recommender">推荐人:5623</p>
-                    <!-- <p class="join-time">加入时间：{{userData.createtime | formatDate}}</p> -->
+                    <p class="join-time">加入时间：{{userData.createtime | formatDate}}</p>
                 </div>
             </div>
-            <!-- <div class="member-msg">
+            <div class="member-msg">
                 <div class="level" v-if="personalData.level === 0">普通用户</div>
                 <div class="level" v-if="personalData.level === 1">VIP会员</div>
                 <div class="level" v-if="personalData.level === 2">官方经理</div>
                 <div class="level" v-if="personalData.level === 3">高级经理</div>
                 <div class="level" v-if="personalData.level === 4">大区经理</div>
                 <div class="level" v-if="personalData.level === 5">联合创始人</div>
-            </div> -->
+            </div>
             
         </div>
         
         <div class="content">
             <!-- 模块 -->
             <div class="module-area">
-                <router-link to="#" class="module-item" tag="div">
-                    <p class="sub-title">
-                        <i class="icon"><img src="/static/images/user/integral-icon.png" /></i>
-                        <span class="text">积分</span>
-                    </p>
-                </router-link>
-                <router-link to="/user/MyBenefits" class="module-item" tag="div">
-                    <p class="sub-title">
-                        <i class="icon"><img src="/static/images/user/profit-icon.png" /></i>
-                        <span class="text">总收益</span>
-                    </p>
-                </router-link>
-                <router-link to="#" class="module-item" tag="div">
-                    <div class="link-item">
+                <div class="module-item">
+                    <router-link to="/user/AccountBalance">
+                        <p class="number">{{userData.remainder_money}}</p>
                         <p class="sub-title">
-                            <i class="icon"><img src="/static/images/user/money-icon1.png" /></i>
-                            <span class="text">已提现</span>
+                            <span class="text">余额</span>
+                            <i class="right-arrow"></i>
                         </p>
-                    </div>
-                </router-link>
+                    </router-link>
+                </div>
+                <div class="module-item">
+                    <router-link to="/user/CommissionList">
+                        <p class="number">{{userData.distribut_money}}</p>
+                        <p class="sub-title">
+                            <span class="text">佣金</span>
+                            <i class="right-arrow"></i>
+                        </p>
+                    </router-link>
+                </div>
+                <div class="module-item">
+                    <router-link to="/user/TeamList">
+                        <div class="link-item">
+                            <p class="number">{{userData.get_all_lower}}</p>
+                            <p class="sub-title">
+                                <span class="text">团队</span>
+                                <i class="right-arrow"></i>
+                            </p>
+                        </div>
+                    </router-link>
+                </div>
             </div>
             
             <div class="link-list">
-                <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/add-friends-icon.png" /></span>
-                    <span class="text">新朋友</span>
-                </router-link>
-                <router-link to="/user/TeamList" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/team-icon.png" /></span>
-                    <span class="text">我的团队</span>
-                </router-link>
-                <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/wybd-icon.png" /></span>
-                    <span class="text">我要报单</span>
-                </router-link>
-                 <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/jlmx-icon.png" /></span>
-                    <span class="text">奖励明细</span>
-                </router-link>
-                <router-link to="/user/TeamList" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/xxtx-icon.png" /></span>
-                    <span class="text">线下提现</span>
-                </router-link>
-                <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/bank-card-icon.png" /></span>
-                    <span class="text">银行卡列表</span>
-                </router-link>
-                 <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/notice-icon1.png" /></span>
-                    <span class="text">公告列表</span>
-                </router-link>
-                <router-link to="/user/TeamList" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/transfer-icon.png" /></span>
-                    <span class="text">申请转账</span>
-                </router-link>
-                <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/zzjl-icon.png" /></span>
-                    <span class="text">转账记录</span>
-                </router-link>
-                 <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/promotion-icon.png" /></span>
-                    <span class="text">我的推广</span>
-                </router-link>
-                <router-link to="/user/TeamList" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/edit-pwd-icon.png" /></span>
-                    <span class="text">修改密码</span>
-                </router-link>
-                <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/login-out-icon.png" /></span>
-                    <span class="text">退出登录</span>
-                </router-link>
-                <!-- <router-link to="/notice/NoticeList">
+                <router-link to="/notice/NoticeList">
                     <div class="link-item">
                         <div class="fl">
                             <span class="icon"><img src="/static/images/user/notice-icon.png" /></span>
@@ -117,7 +77,7 @@
                         <div class="more"></div>
                     </div>
                 </router-link>
-                <router-link to="/user/ReceiptInformation">
+                <!-- <router-link to="/user/ReceiptInformation">
                     <div class="link-item">
                         <div class="fl">
                             <span class="icon"><img src="/static/images/user/money-icon.png" /></span>
@@ -125,7 +85,7 @@
                         </div>
                         <div class="more"></div>
                     </div>
-                </router-link>
+                </router-link> -->
                 <div class="link-item">
                     <div class="fl">
                         <span class="icon"><img src="/static/images/user/tel-icon.png" /></span>
@@ -133,7 +93,7 @@
                     </div>
                     <div class="more">{{userData.mobile}}</div>
                 </div>
-                <router-link to="/user/InviteLink">
+                <!-- <router-link to="/user/InviteLink">
                     <div class="link-item">
                         <div class="fl">
                             <span class="icon"><img src="/static/images/user/link-icon.png" /></span>
@@ -141,7 +101,7 @@
                         </div>
                         <div class="more"></div>
                     </div>
-                </router-link>
+                </router-link> -->
                 <router-link to="/user/mySharing">
                     <div class="link-item">
                         <div class="fl">
@@ -160,7 +120,7 @@
                         </div>
                         <div class="more"></div>
                     </div>
-                </router-link> -->
+                </router-link>
         
             </div>
         </div>
@@ -261,12 +221,12 @@
         padding-bottom 114px
         .header
             width 100%
-            height 320px
+            height 340px
             background url(/static/images/user/topHeader-bg.png) no-repeat
             background-size 100%
             display flex
             justify-content space-between
-            padding 30px 24px 0
+            padding 65px 24px 0
             box-sizing border-box
             position relative
             z-index 1
@@ -275,8 +235,8 @@
                 display flex
                 align-items center
                 .avatar
-                    width 100px
-                    height 100px
+                    width 110px
+                    height 110px
                     border-radius 50%
                     overflow hidden
                     margin-right 20px
@@ -304,7 +264,9 @@
                     padding-left 10px
                     box-sizing border-box
         .content
-            margin-top -120px
+            margin-top -86px
+            padding 0 24px
+            box-sizing border-box
             position relative
             z-index 2
             .headline 
@@ -328,56 +290,63 @@
                     background-size 8px 14px
                     padding-right 22px
             .module-area
-                width 702px
-                height 150px
+                height 140px
                 background-color #fff
-                margin 0 auto 20px
+                margin-bottom 36px
                 border-radius 10px
                 display flex
                 align-items center
                 .module-item
                     flex 1
                     text-align center
+                    border-right 1px solid #efece9
+                    &:last-child
+                        border-right none
+                    a
+                        display block
                     .number
                         font-size 36px
                     .sub-title
                         font-size 28px 
-                        display flex
-                        align-items center
-                        justify-content center
-                        .icon
-                            width 38px
-                            height 38px
+                        .right-arrow
+                            width 7px
+                            height 11px
                             display inline-block
-                            margin-right 15px
-                            img 
-                                width 100%
+                            background url(/static/images/user/right-arrow.png) no-repeat
+                            background-size 7px 11px
+                            margin-left 5px
+                            vertical-align middle
             .link-list 
-                width 100%
                 background-color #fff
-                padding 40px 0 0 0
+                border-radius 10px
+                padding 0 24px
                 box-sizing border-box
-                display flex
-                align-items center
-                justify-content space-between
-                flex-wrap wrap
                 .link-item 
-                    width 33%
+                    height 80px
                     font-size 28px
                     display flex
                     align-items center
                     justify-content space-between
-                    flex-direction column
-                    margin-bottom 24px
-                    .icon
-                        width 108px
-                        height 80px
-                        display inline-block
-                        img
-                            width 100%
-                    .text
-                        font-size 28px
-                        line-height 86px
-                   
+                    color #525252
+                    border-bottom 1px solid #e6e6e6
+                    &.border-none 
+                        border-bottom none
+                    .fl
+                        flex 1
+                        display flex
+                        align-items center
+                        .icon
+                            width 38px
+                            height 38px
+                            display inline-block
+                            margin-right 30px
+                            img
+                                width 100%
+                    .more 
+                        min-width 8px
+                        min-height 14px
+                        background url(/static/images/user/right-arrow2.png) no-repeat right center
+                        background-size 8px 14px
+                        padding-right 30px            
 
 </style>

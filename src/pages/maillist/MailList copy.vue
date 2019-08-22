@@ -5,22 +5,11 @@
 			<span slot="rightBtn">添加好友</span>
 		</TopHeaderNew>
 
-		<div class="mail-container">
-			<!-- 通讯录列表 -->
-			<div class="mail-list" ref="mailList">
-				<div class="list-item" v-for="(items,index) in userData" :key="index">
-					<p class="index">{{items.index}}</p>
-					<div class="group-item" v-for="(item,index) in items.users">
-						<div class="avatar"><img :src="item.avatar" /> </div>
-						<div class="name">{{item.name}}</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- 索引列表 -->
-			<div class="index-list" ref="indexList">
-				<div class="index-item" v-for="(item,index) in userIndex" :key="index" @click="setScroll($event)">{{item}}</div>
-			</div>
+		<div class="mail-container" >
+			<van-index-bar v-for="(items,index) in userData" :indexList = userIndex>
+				<van-index-anchor :index="items.index"  />
+				<van-cell :title="item.name" v-for="(item,index) in items.users" />
+			</van-index-bar>
 		</div>
 
 		<!-- 底部导航 -->
@@ -40,10 +29,14 @@ export default {
 	},
 	data() {
 		return {
+			// indexList:["A","B","C","D","E","F",],
 			userData:[
 				{
 					"index":"A",
 					"users":[
+						{"name":"a小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
+						{"name":"a小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
+						{"name":"a小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
 						{"name":"a小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
 						{"name":"a小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
 						{"name":"a小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
@@ -79,16 +72,34 @@ export default {
 						{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
 						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
 						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
+						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
+						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
+						{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
+						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
+						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
+						{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"}
+					]
+				},
+				{
+					"index":"E",
+					"users":[
+						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
+						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
+						{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
+						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
+						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
+						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
+						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
+						{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
+						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
+						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
 						{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"}
 					]
 				},
 			]
 		};
 	},
-	mounted(){
-		this.setIndePosition();
-	},
-	
+
 	computed:{
 		/**
 		 * 计算过滤后的索引值
@@ -111,32 +122,7 @@ export default {
 			}
 			return result;
 		},
-
-		/**
-		 * 设置索引的位置
-		 */
-		setIndePosition(){
-			var iH = this.$refs.indexList.offsetHeight; //索引盒子的高度
-			this.$refs.indexList.style.marginTop = - iH / 2 + 'px';
-			console.log(iH)
-		},
-		
-		/**
-		 * 设置滚动条
-		 */
-		setScroll(e){
-			// console.log(e.target.innerHTML)
-			var aP = this.$refs.mailList.getElementsByTagName('p');
-			for(var i = 0;i< aP.length;i++){
-				if(aP[i].innerHTML == e.target.innerHTML){
-					// console.log(aP[i].offsetTop)
-					var scrollTop = aP[i].offsetTop
-					document.documentElement.scrollTop = scrollTop - 53.5; 
-					console.log(document.documentElement.scrollTop)
-				}
-			}
-		}
-	},
+	}
 
 	
 };

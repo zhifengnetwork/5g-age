@@ -52,9 +52,9 @@ export default {
     width 100%
     height 88px
     line-height 88px
-    color #151515
+    color #ffffff
     font-size 30px
-    background-color #ffffff
+    background linear-gradient(to right,#00dafd 0%,#00a9ff 100%)
     display flex
     justify-content space-between
     align-items center
@@ -62,7 +62,6 @@ export default {
     top 0
     left 0
     z-index 9
-    // border-bottom 1.5px solid #e6e6e6
     .backBtn
         width 10%
         text-align center
@@ -79,6 +78,7 @@ export default {
         overflow hidden
         text-overflow ellipsis
     .rightBtn
+        font-size 28px
         padding-right 30px
         position absolute
         right 0
