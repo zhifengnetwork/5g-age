@@ -143,6 +143,8 @@ export default {
                     flex 1
                     text-align center
                     font-size 22px
+                .column:nth-child(4)
+                    word-wrap break-word
                 &:nth-child(even)
                     background-color #ffede7
             .none

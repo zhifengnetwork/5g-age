@@ -2,7 +2,7 @@
 	<div class="MailList">
 		<TopHeaderNew custom-title="好友">
 			<i slot="backBtn" class="iconfont icon-fanhui"></i>
-			<span slot="rightBtn">添加好友</span>
+			<router-link to="/user/Give" slot="rightBtn" tag="span">添加好友</router-link>
 		</TopHeaderNew>
 
 		<div class="mail-container">
@@ -87,6 +87,7 @@ export default {
 	},
 	mounted(){
 		this.setIndePosition();
+		window.addEventListener('scroll', this.monitorScrolling);
 	},
 	
 	computed:{
@@ -128,14 +129,31 @@ export default {
 			// console.log(e.target.innerHTML)
 			var aP = this.$refs.mailList.getElementsByTagName('p');
 			for(var i = 0;i< aP.length;i++){
+				aP[i].classList.remove("fixed");
 				if(aP[i].innerHTML == e.target.innerHTML){
 					// console.log(aP[i].offsetTop)
-					var scrollTop = aP[i].offsetTop
+					var scrollTop = aP[i].offsetTop;
+					aP[i].classList.add("fixed");
 					document.documentElement.scrollTop = scrollTop - 53.5; 
-					console.log(document.documentElement.scrollTop)
 				}
 			}
-		}
+		},
+
+		/**
+		 * 监听滚动
+		 */
+		monitorScrolling(){
+			var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+			var aP = this.$refs.mailList.getElementsByTagName('p');
+			for(var i = 0;i< aP.length;i++){
+				aP[i].classList.remove("fixed");
+				if(scrollTop >= aP[i].offsetTop - 53.5 && scrollTop < aP[i+1].offsetTop){
+					aP[i].classList.add("fixed");
+				}
+			}
+		},
+		
+
 	},
 
 	
@@ -148,9 +166,12 @@ export default {
 	width 100%
 	min-height 100%
 	background-color #ffffff
+	& /deep/ .TopHeader
+		margin-bottom 10px
+		color #ffffff
+		background linear-gradient(to right,#00dafd 0%,#00a9ff 100%)
 	.mail-container
 		height 100%
-		margin-top 10px
 		padding 0 28px 98px
 		box-sizing border-box
 		.mail-list
@@ -162,7 +183,16 @@ export default {
 					height 42px
 					line-height 42px
 					padding-left 40px
+					box-sizing border-box
 					background-color #fff
+				.fixed
+					width 100%
+					padding-left 68px
+					box-sizing border-box
+					position fixed
+					top 88px
+					left 0
+					z-index 9
 				.group-item
 					display flex
 					align-items center

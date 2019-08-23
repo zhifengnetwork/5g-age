@@ -27,8 +27,8 @@
         
         <div class="content">
             <!-- 模块 -->
-            <div class="module-area">
-                <router-link to="#" class="module-item" tag="div">
+            <!-- <div class="module-area">
+                <router-link to="/user/AccountBalance" class="module-item" tag="div">
                     <p class="sub-title">
                         <i class="icon"><img src="/static/images/user/integral-icon.png" /></i>
                         <span class="text">积分</span>
@@ -40,10 +40,36 @@
                         <span class="text">总收益</span>
                     </p>
                 </router-link>
-                <router-link to="#" class="module-item" tag="div">
+                <router-link to="/user/WithdrawalDetails" class="module-item" tag="div">
                     <div class="link-item">
                         <p class="sub-title">
                             <i class="icon"><img src="/static/images/user/money-icon1.png" /></i>
+                            <span class="text">已提现</span>
+                        </p>
+                    </div>
+                </router-link>
+            </div> -->
+
+            <div class="module-area">
+                <router-link to="/user/AccountBalance" class="module-item" tag="div">
+                    <p class="number">{{userData.remainder_money}}</p>
+                    <p class="sub-title">
+                        <!-- <i class="icon"><img src="/static/images/user/integral-icon.png" /></i> -->
+                        <span class="text">积分</span>
+                    </p>
+                </router-link>
+                <router-link to="/user/MyBenefits" class="module-item" tag="div">
+                    <p class="number">{{userData.distribut_money}}</p>
+                    <p class="sub-title">
+                        <!-- <i class="icon"><img src="/static/images/user/profit-icon.png" /></i> -->
+                        <span class="text">总收益</span>
+                    </p>
+                </router-link>
+                <router-link to="/user/WithdrawalDetails" class="module-item" tag="div">
+                    <div class="link-item"> 
+                        <p class="number">{{userData.get_all_lower}}</p>
+                        <p class="sub-title">
+                            <!-- <i class="icon"><img src="/static/images/user/money-icon1.png" /></i> -->
                             <span class="text">已提现</span>
                         </p>
                     </div>
@@ -75,93 +101,30 @@
                     <span class="icon"><img src="/static/images/user/bank-card-icon.png" /></span>
                     <span class="text">银行卡列表</span>
                 </router-link>
-                 <router-link to="#" class="link-item" tag="div">
+                 <router-link to="/notice/NoticeList" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/notice-icon1.png" /></span>
                     <span class="text">公告列表</span>
                 </router-link>
-                <router-link to="/user/TeamList" class="link-item" tag="div">
+                <router-link to="/user/Give" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/transfer-icon.png" /></span>
                     <span class="text">申请转账</span>
                 </router-link>
-                <router-link to="#" class="link-item" tag="div">
+                <router-link to="/user/GiveRecord" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/zzjl-icon.png" /></span>
                     <span class="text">转账记录</span>
                 </router-link>
-                 <router-link to="#" class="link-item" tag="div">
+                 <router-link to="/user/mySharing" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/promotion-icon.png" /></span>
                     <span class="text">我的推广</span>
                 </router-link>
-                <router-link to="/user/TeamList" class="link-item" tag="div">
+                <router-link to="/EditPassword" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/edit-pwd-icon.png" /></span>
                     <span class="text">修改密码</span>
                 </router-link>
-                <router-link to="#" class="link-item" tag="div">
+                <div class="link-item" @click="logout()">
                     <span class="icon"><img src="/static/images/user/login-out-icon.png" /></span>
                     <span class="text">退出登录</span>
-                </router-link>
-                <!-- <router-link to="/notice/NoticeList">
-                    <div class="link-item">
-                        <div class="fl">
-                            <span class="icon"><img src="/static/images/user/notice-icon.png" /></span>
-                            <span class="text">公告信息</span>
-                        </div>
-                        <div class="more"></div>
-                    </div>
-                </router-link>
-                <router-link to="/user/EditLevel" v-show="personalData.level > 1">
-                    <div class="link-item">
-                        <div class="fl">
-                            <span class="icon"><img src="/static/images/user/level-icon.png" /></span>
-                            <span class="text">等级更改</span>
-                        </div>
-                        <div class="more"></div>
-                    </div>
-                </router-link>
-                <router-link to="/user/ReceiptInformation">
-                    <div class="link-item">
-                        <div class="fl">
-                            <span class="icon"><img src="/static/images/user/money-icon.png" /></span>
-                            <span class="text">收款信息</span>
-                        </div>
-                        <div class="more"></div>
-                    </div>
-                </router-link>
-                <div class="link-item">
-                    <div class="fl">
-                        <span class="icon"><img src="/static/images/user/tel-icon.png" /></span>
-                        <span class="text">手机号绑定</span>
-                    </div>
-                    <div class="more">{{userData.mobile}}</div>
-                </div>
-                <router-link to="/user/InviteLink">
-                    <div class="link-item">
-                        <div class="fl">
-                            <span class="icon"><img src="/static/images/user/link-icon.png" /></span>
-                            <span class="text">邀请链接</span>
-                        </div>
-                        <div class="more"></div>
-                    </div>
-                </router-link>
-                <router-link to="/user/mySharing">
-                    <div class="link-item">
-                        <div class="fl">
-                            <span class="icon"><img src="/static/images/user/share-icon.png" /></span>
-                            <span class="text">我的推广</span>
-                        </div>
-                        <div class="more"></div>
-                    </div>
-                </router-link>
-
-                <router-link to="/user/CustomerService">
-                    <div class="link-item">
-                         <div class="fl">
-                            <span class="icon"><img src="/static/images/user/kefu-icon.png" /></span>
-                            <span class="text">联系客服</span>
-                        </div>
-                        <div class="more"></div>
-                    </div>
-                </router-link> -->
-        
+                </div>        
             </div>
         </div>
 
@@ -188,7 +151,7 @@
             this.$store.commit('showLoading')
             this.reqUser();
             this.reqPersonal();
-            
+            document.documentElement.scrollTop = 0; 
         },
         methods: {
             reqUser() {
@@ -212,6 +175,7 @@
                     }
                 })
             },
+            
             reqPersonal() {
                 let url = 'user/personal'
                 this.$axios.post(url,{
@@ -223,6 +187,33 @@
                     }else{
                         that.$toast(res.msg)
                     }
+                })
+            },
+
+            /**
+             * 退出登录
+             */
+            logout() {
+                let url = '/user/logout';
+                this.$dialog.confirm({
+                    title:'温馨提示',
+                    message:'你确定要退出登录吗？'
+                }).then(() => {
+                    this.$axios.post(url,{
+                        token:this.$store.getters.optuser.Authorization,
+                    }).then((res) => {
+                        this.$store.commit('del_token'); //清除token
+                        if(res.data.status == 200){
+                            this.$toast({message:"退出成功",duration:1000});
+                            setTimeout(() => {
+                                this.$router.push("/Login");
+                            },1000)
+                        }else{
+                            this.$toast(res.data.msg)
+                        }
+                    })
+                }).catch(() => {
+                    // on cancel
                 })
             },
         },

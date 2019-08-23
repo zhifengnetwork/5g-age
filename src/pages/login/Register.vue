@@ -47,7 +47,6 @@ export default {
             password2:'',//重复密码,
             uid:'',
             isClick:false,
-            flag:false
         }
     },
     created(){
@@ -63,7 +62,7 @@ export default {
                 if(this.isClick){
                     return;
                 }
-                this.isClick =true
+                this.isClick = true ;
                 // 发送网络请求
                 var $phone = this.phone;
                 var $temp = 'sms_reg';
@@ -75,7 +74,6 @@ export default {
                     type:1
                 })
                 .then( (res)=>{
-                    // this.isClick = false;
                     var status = res.data.status
                     if(status === 200){
                         // 开启倒计时
@@ -167,10 +165,10 @@ export default {
                 this.$toast('两次密码不一致')
                 return false
             }else{
-                if(this.flag){
+                if(this.isClick){
                     return;
                 }
-                this.flag = true;
+                this.isClick = true;
                 // 请求数据
                 this.$axios.post('user/register',{
                     phone:this.phone,
@@ -187,12 +185,12 @@ export default {
                             this.$router.push("/Login");
                         }, 1000);
                     }else{
-                        this.flag = false;
+                        this.isClick = false;
                         this.$toast(res.data.msg) 
                     }
                 })
                 .catch((error) => {
-                    this.flag = false;
+                    this.isClick = false;
                     console.log('请求错误:'+ error)
                 })
             }

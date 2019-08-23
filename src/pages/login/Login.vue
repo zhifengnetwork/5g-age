@@ -34,7 +34,8 @@ export default {
             phone:'',//手机号
             password:'',//密码
             isHide:true,  //是否显示密码
-            disabled:false
+            disabled:false,
+            isClick:false
         }
     },
     created(){
@@ -46,6 +47,11 @@ export default {
         saveUserInfo() {
             var _that=this;
             if(! _that._verifyUserInfo()){ return }
+            if(this.isClick){
+                return
+            }
+            this.isClick = true;
+
             let url = 'user/login'
              _that.$axios.post(url,{
                 phone: _that.phone,
@@ -59,14 +65,16 @@ export default {
                     var tokens = list.data.token
                     _that.$store.commit('set_token',{Authorization: tokens})  //保存token
                     setTimeout(()=>{
-                        _that.$router.push({path:'/Home',name:'Home'})
+                        _that.$router.push({path:'/User',name:'User'})
                     },1000)
                 }else{
                     _that.$toast(list.msg)
                 }
+                this.isClick = false;
             })
             .catch((error) => {
-                alert('请求错误:'+ error)
+                alert('请求错误:'+ error);
+                this.isClick = false;
             }) 
         },
         /**

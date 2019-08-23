@@ -4,7 +4,7 @@
  			<li>
  				<router-link exact to="/Chat">
                     <i class="chat-icon">
-						<span class="num">8</span>
+						<!-- <span class="num">8</span> -->
 					</i>
  					<span class="text">聊天</span>
  				</router-link>

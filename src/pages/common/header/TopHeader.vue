@@ -52,9 +52,9 @@ export default {
     width 100%
     height 88px
     line-height 88px
-    color #ffffff
+    color #151515
     font-size 30px
-    background linear-gradient(to right,#00dafd 0%,#00a9ff 100%)
+    background-color #ffffff
     display flex
     justify-content space-between
     align-items center

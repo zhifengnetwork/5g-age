@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import 'jquery'
 
 // 重置样式
 import '../static/css/reset.css'

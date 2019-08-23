@@ -59,10 +59,9 @@ export default {
             to_id:'',
             phone:'',
             money:'',
-
             payPassword:'',     //支付密码
             showKeyboard:false, //是否显示数字键盘
-
+            isClick:false
         }
     },
     created(){
@@ -135,6 +134,11 @@ export default {
          * 确认转账
          */
         confirmTransfer(){
+            if(this.isClick){
+                return
+            }
+            this.isClick = true;
+
             let url = 'Balance/transfer_money';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
@@ -164,8 +168,9 @@ export default {
                     // 支付失败
                     this.$toast.fail(res.data.msg);
                 }
+                this.isClick = false;
             }).catch((error) => {
-
+                this.isClick = false;
             })
            
         },
@@ -208,8 +213,12 @@ export default {
 
 <style lang="stylus" scoped>
 .Give
+    width 100%
+    height 100%
+    background #ffffff
     & /deep/ .TopHeader
-        background-color #f2f2f2
+        background #ffffff
+        color #151515
     .content
         padding 0 24px
         box-sizing border-box
@@ -257,7 +266,7 @@ export default {
             line-height 88px
             text-align center
             color #ffffff
-            background #ff4d4d
+            background #00c5fe
             border-radius 40px
             position fixed
             left 50%

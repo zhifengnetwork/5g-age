@@ -123,11 +123,11 @@ export default {
                 text-align center
                 line-height 88px
                 letter-spacing 4px
-                background #ff4d4d
+                background #00c5fe
             .link-btn2 
-                color #ff4444 
+                color #00c5fe 
                 background none 
-                border 1.5px solid #ff4d4d 
+                border 1.5px solid #00c5fe 
         .link-list 
             .link-item 
                 width 100%
