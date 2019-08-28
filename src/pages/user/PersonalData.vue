@@ -195,7 +195,7 @@
                     height 88px
                     font-size 30px
                     color #ffffff
-                    background-color #ff4d4d
+                    background linear-gradient(to right, #00d7fd,#00a9ff)
                     text-align center
                     line-height 88px
                     border-radius 40px

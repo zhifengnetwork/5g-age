@@ -1,10 +1,12 @@
 <template>
     <div class="EditPassword">
-        
-        <h1>
+        <TopHeader custom-title="修改登录密码">
+			<i slot="backBtn" class="iconfont icon-fanhui"></i>
+		</TopHeader>
+        <!-- <h1>
             <i slot="backBtn" @click="goBack()"  class="iconfont icon-fanhui"></i>
             <span class="title">修改登录密码</span>
-        </h1>
+        </h1> -->
         <div class="edit-container">
             <div class="form-group">
                 <i class="icon tel-icon"></i>
@@ -37,11 +39,15 @@
 </template>
 
 <script>
+import TopHeader from "@/pages/common/header/TopHeader";
 /* md5 */
 import md5 from 'js-md5';
 import { Dialog } from 'vant';
 export default {
     name:'EditPassword',
+    components: {
+		TopHeader
+	},
     data(){
         return{
             phone:'',//手机号
@@ -231,12 +237,15 @@ export default {
             left 24px
             padding 3px
     .edit-container
+        margin-top 80px
         padding 0 24px
         box-sizing border-box
         .form-group
             width 100%
             height 90px
-            border-bottom 1px solid #f56817
+            border 1px solid #ebebeb
+            margin-bottom 20px
+            border-radius 10px
             display flex
             align-items center
             .icon
@@ -274,10 +283,11 @@ export default {
             border-radius 40px
             font-size 36px
             color #ffffff
-            background linear-gradient(to right, #f9a775,#fb946a)
+            background linear-gradient(to right, #00d7fd,#00a9ff)
             margin-top 88px
+            opacity .6
         .hiLine
-            background linear-gradient(to right, #f66716,#f94e08)
+            opacity 1
         .jump-link
             width 100%
             font-size 28px

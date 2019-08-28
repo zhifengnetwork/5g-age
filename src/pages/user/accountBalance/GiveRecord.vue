@@ -1,22 +1,22 @@
 <template>
-    <div class="Give">
+    <div class="GiveRecord">
         <!-- 头部组件 -->
-        <TopHeader custom-title="赠送记录">
+        <TopHeader custom-title="转账记录">
             <i slot="backBtn" class="iconfont icon-fanhui"></i>
         </TopHeader>
 
         <div class="content">
             <div class="details-container">
                 <div class="thead">
-                    <span>赠送日期</span>
-                    <span>收款ID/手机号</span>
-                    <span>金额</span>
+                    <span>转账日期</span>
+                    <span>收款ID</span>
+                    <span>积分</span>
                 </div>
                 <div class="record-list" v-if="transfercordData.length > 0">
                     <div class="record-item" v-for="(item,index) in transfercordData" :key="index">
                         <div class="column">{{item.create_time | formatDate}}</div>
-                        <div class="column">{{item.id}}/{{item.account_id}}</div>
-                        <div class="column">￥{{item.balance}}</div>
+                        <div class="column">{{item.id}}</div>
+                        <div class="column">{{item.balance}}</div>
                     </div>
                 </div>
 
@@ -120,50 +120,51 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.content
-    padding 0 24px
-    box-sizing border-box
-    .details-container
-        .thead  
-            height 50px
-            font-size 26px
-            display flex
-            align-items center
-            justify-content space-between
-            background-color #ffc9b4
-            span 
+.GiveRecord
+    width 100%
+    min-height 100%
+    .content
+        .details-container
+            .thead  
+                height 50px
+                font-size 26px
+                background-color #c6e1ff
+                display flex
+                align-items center
+                justify-content space-between
+                span 
+                    text-align center
+                    display block 
+                span:nth-child(1)
+                    width 30%
+                span:nth-child(2)
+                    width 40%
+                span:nth-child(3)
+                    width 30%
+            .record-item
+                width 100%
+                height 70px
+                display flex
+                align-items center
+                background-color #f3f9ff
+                .column
+                    text-align center
+                    font-size 20px
+                .column:nth-child(1)
+                    width 30%
+                .column:nth-child(2)
+                    width 40%
+                .column:nth-child(3)
+                    width 30%
+                &:nth-child(even)
+                    background-color #ecf4fc
+            .none
                 text-align center
-                display block 
-            span:nth-child(1)
-                width 30%
-            span:nth-child(2)
-                width 40%
-            span:nth-child(3)
-                width 30%
-        .record-item
-            width 100%
-            height 70px
-            display flex
-            align-items center
-            background-color #fff4f0
-            .column
-                text-align center
-                font-size 20px
-            .column:nth-child(1)
-                width 30%
-            .column:nth-child(2)
-                width 40%
-            .column:nth-child(3)
-                width 30%
-            &:nth-child(even)
-                background-color #ffede7
-        .none
-            text-align center
-            margin 150px auto
-            img
-                width 80px
-            p
-                margin 10px auto
-                font-size 24px
+                margin 150px auto
+                img
+                    width 80px
+                p
+                    margin 10px auto
+                    font-size 24px
 
 </style>

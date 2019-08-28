@@ -105,8 +105,6 @@ export default {
     height 100%
     background-color #fff
     .content
-        padding 0 24px
-        box-sizing border-box
         .tab-title
             height 70px
             font-size 28px
@@ -119,8 +117,9 @@ export default {
                 text-align center
                 height 100%
                 line-height 70px
+                color #666666
                 &.active
-                    color #ef1010
+                    color #151515
         .tab-container
             .thead  
                 height 50px
@@ -128,7 +127,7 @@ export default {
                 display flex
                 align-items center
                 justify-content space-between
-                background-color #ffc9b4
+                background-color #c6e1ff
                 span
                     flex 1 
                     text-align center
@@ -138,15 +137,16 @@ export default {
                 height 70px
                 display flex
                 align-items center
-                background-color #fff4f0
+                background-color #f3f9ff
                 .column
                     flex 1
                     text-align center
                     font-size 22px
                 .column:nth-child(4)
                     word-wrap break-word
+                    color #0079ff
                 &:nth-child(even)
-                    background-color #ffede7
+                    background-color #ecf4fc
             .none
                 text-align center
                 margin 150px auto

@@ -2,7 +2,7 @@
 	<div class="MailList">
 		<TopHeaderNew custom-title="好友">
 			<i slot="backBtn" class="iconfont icon-fanhui"></i>
-			<router-link to="/user/Give" slot="rightBtn" tag="span">添加好友</router-link>
+			<router-link to="/AddFriends" slot="rightBtn" tag="span">添加好友</router-link>
 		</TopHeaderNew>
 
 		<div class="mail-container">
@@ -12,7 +12,10 @@
 					<p class="index">{{items.index}}</p>
 					<div class="group-item" v-for="(item,index) in items.users">
 						<div class="avatar"><img :src="item.avatar" /> </div>
-						<div class="name">{{item.name}}</div>
+						<div class="main">
+							<div class="name">{{item.realname}}</div>
+							<div class="user_id">ID:{{item.id}}</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -41,49 +44,52 @@ export default {
 	data() {
 		return {
 			userData:[
-				{
-					"index":"A",
-					"users":[
-						{"name":"a小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
-						{"name":"a小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
-						{"name":"a小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
-						{"name":"a小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
-						{"name":"a小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
-						{"name":"a小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
-						{"name":"a小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
-						{"name":"a小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
-						{"name":"a小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"}
-					]
-				},
-				{
-					"index":"B",
-					"users":[
-						{"name":"b小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
-						{"name":"b小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
-						{"name":"b小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"}
-					]
-				},
-				{
-					"index":"C",
-					"users":[
-						{"name":"c小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
-						{"name":"c小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
-						{"name":"c小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"}
-					]
-				},
-				{
-					"index":"D",
-					"users":[
-						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
-						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
-						{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"},
-						{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622"},
-						{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623"},
-						{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624"}
-					]
-				},
+				// {
+				// 	"index":"A",
+				// 	"users":[
+				// 		{"name":"a小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622","id":"88890"},
+				// 		{"name":"a小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623","id":"88890"},
+				// 		{"name":"a小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624","id":"88890"},
+				// 		{"name":"a小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622","id":"88890"},
+				// 		{"name":"a小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623","id":"88890"},
+				// 		{"name":"a小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624","id":"88890"},
+				// 		{"name":"a小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622","id":"88890"},
+				// 		{"name":"a小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623","id":"88890"},
+				// 		{"name":"a小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624","id":"88890"}
+				// 	]
+				// },
+				// {
+				// 	"index":"B",
+				// 	"users":[
+				// 		{"name":"b小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622","id":"88890"},
+				// 		{"name":"b小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623","id":"88890"},
+				// 		{"name":"b小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624","id":"88890"}
+				// 	]
+				// },
+				// {
+				// 	"index":"C",
+				// 	"users":[
+				// 		{"name":"c小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622","id":"88890"},
+				// 		{"name":"c小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623","id":"88890"},
+				// 		{"name":"c小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624","id":"88890"}
+				// 	]
+				// },
+				// {
+				// 	"index":"D",
+				// 	"users":[
+				// 		{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622","id":"88890"},
+				// 		{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623","id":"88890"},
+				// 		{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624","id":"88890"},
+				// 		{"name":"d小腊肉","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592622","id":"88890"},
+				// 		{"name":"d小腊肉2","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592623","id":"88890"},
+				// 		{"name":"d小腊肉3","avatar":"/static/images/maillist/avatar-img.png","tel":"17875592624","id":"88890"}
+				// 	]
+				// },
 			]
 		};
+	},
+	created(){
+		this.getMailList();
 	},
 	mounted(){
 		this.setIndePosition();
@@ -135,6 +141,7 @@ export default {
 					var scrollTop = aP[i].offsetTop;
 					aP[i].classList.add("fixed");
 					document.documentElement.scrollTop = scrollTop - 53.5; 
+					document.body.scrollTop = scrollTop - 53.5; 
 				}
 			}
 		},
@@ -152,7 +159,22 @@ export default {
 				}
 			}
 		},
-		
+
+		/**
+		 * 请求好友列表
+		 */
+		getMailList(){
+			var url = 'friends/mail_list';
+			this.$axios.post(url,{
+				token:this.$store.getters.optuser.Authorization
+			}).then((res) => {
+				if(res.data.status == 200){
+					this.userData = res.data.data
+				}				
+			}).catch((error) => {
+				alert("请求失败：" + error)
+			})
+		}
 
 	},
 
@@ -206,7 +228,9 @@ export default {
 							width 100%
 					.name
 						font-size 30px
-						padding-top 15px
+						margin-bottom 10px
+					.user_id
+						font-size 26px
 		.index-list
 			width 26px
 			font-size 24px

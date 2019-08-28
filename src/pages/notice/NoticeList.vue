@@ -4,7 +4,7 @@
 		<TopHeader custom-title="公告列表">
 			<i slot="backBtn" class="iconfont icon-fanhui"></i>
 		</TopHeader>
-
+        <div class="hat-bg"></div>
         <div class="content">
             <div class="notice-list">
                 <ul>
@@ -88,18 +88,37 @@ export default {
     height 100%
     background-color #f2f2f2
     & /deep/ .TopHeader
-        background-color #f2f2f2
+        color #ffffff
+        background linear-gradient(to right,#00dafd 0%,#00a9ff 100%)
+    .hat-bg
+        content ''
+        display block
+        width 750px
+        height 92px
+        background url("/static/images/user/content-top-bg.png") no-repeat
+        background-size 100%
+        position fixed
+        top 88px
+        left 0
+        z-index 1
     .content
-        padding 0 24px
-        box-sizing border-box
+        width 702px
+        height 100%
+        margin 0 auto
+        border-radius 10px
+        background-color #fff
+        position relative
+        z-index 98
         .notice-list
+            padding 20px
+            box-sizing border-box
             ul
                 li
                     height 190px
                     font-size 28px
                     background-color #fff
                     margin-bottom 20px
-                    border-radius 10px
+                    border-bottom 2px solid #bfbfbf
                     padding 20px 36px
                     box-sizing border-box
                     position relative
@@ -126,6 +145,8 @@ export default {
                         position absolute
                         right 36px
                         bottom 20px
+                &:last-child
+                    border-bottom none
 
 
 </style>

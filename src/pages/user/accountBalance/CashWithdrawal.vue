@@ -3,39 +3,29 @@
         <!-- 头部组件 -->
         <TopHeader custom-title="账户提现">
             <i slot="backBtn" class="iconfont icon-fanhui"></i>
+            <router-link to="/user/WithdrawalDetails" tag="span" slot="rightBtn">提现明细</router-link>
         </TopHeader>
 
         <div class="content">
             <div class="amount-money">
-                <div class="sub-title">可提现金额</div>
-                <div class="money">{{accountData.remainder_money | formatMoney}}</div>
+                <div class="sub-title">可提现积分</div>
+                <div class="money">{{accountData.remainder_money}}</div>
             </div>
             <!-- 提现方式 -->
             <div class="withdrawal-way">
                 <h3>提现方式</h3>
                 <div class="way-list">
-                    <div class="group-item">
-                        <van-dropdown-menu>
-                            <van-dropdown-item v-model="currencyNum" :options="currencyList" />
-                        </van-dropdown-menu>
-                    </div>
-                    <!-- <div class="way-item" 
+                    <div class="way-item" 
                      v-for="(item,index) in wayArr" 
                      :key="index" 
                     :class="{on:index == nowIndex}"
                      @click="selectType(index,item.type)">
                         <img :src="item.icon" />
-                    </div> -->
-                    <!-- <router-link to="/user/EditBankCard" class="add-card" tag="div"><i class="icon"></i>添加银行卡</router-link> -->
+                    </div>
+                    <router-link to="/user/AddBankCard" class="add-card" tag="div"><i class="icon"></i>添加银行卡</router-link>
                 </div>
-
-                <div class="input-group">
-                    <div class="sub-title">地址:</div>
-                    <input type="text" placeholder="请输入地址" v-focus v-model="addressUrl">
-                </div>
-
                 <!-- 账号信息 -->
-                <!-- <router-link to="/user/EditAlipay">
+                <router-link to="/user/EditAlipay">
                     <div class="account-wrap" v-show="nowIndex == 0">
                         <div class="account-msg">
                             <span class="name">{{this.alipay ? this.alipay:'请添加支付宝账号'}}</span>
@@ -43,29 +33,31 @@
                         </div>
                         <div class="edit-btn"></div>  
                     </div>
-                </router-link> -->
+                </router-link>
 
                 <!-- 银行卡信息 -->
-                <!-- <div class="account-wrap" v-show="nowIndex == 1">
+                <div class="account-wrap" v-show="nowIndex == 1" @click="bankShow()">
                     <div class="account-msg">
-                        <span class="name">银行</span>
-                        <span class="account-number">6222</span>
+                        <span class="name">{{bankDefault}}</span>
+                        <span class="account-number">{{bankNumber}}</span>
                     </div>
                     <div class="right-arrow"></div>  
-                </div> -->
+                </div>
                 
                 <!-- 银行卡上拉菜单 -->
-                <!-- <div class="bankPopup">
-                    <van-popup v-model="showBank">
-                        <van-radio-group>
-                            <van-cell-group>
-                                <van-cell v-for="(item,index) in bankList" :key="index" :title="item.name" clickable @click="selectBank(item)">
-                                    <van-radio :name="item.name"/>
-                                </van-cell>
-                            </van-cell-group>    
+                <div class="bankPopup">
+                    <van-action-sheet v-model="showBank">
+                        <van-radio-group v-model="bankDefault">
+                            <div class="card-list">
+                                <div class="card-item" v-for="(item,index) in bankList" :key="index"  @click="selectBank(item)">
+                                    <div class="bank">{{item.bank_name}}</div>
+                                    <div class="card-num">{{item.bank_card}}</div>
+                                    <van-radio :name="item.bank_name" />
+                                </div>
+                            </div>
                         </van-radio-group>
-                    </van-popup>
-                </div> -->
+                    </van-action-sheet>
+                </div>
 
             </div>
 
@@ -84,10 +76,6 @@
                 </div>
                 <div class="group-item">
                     <div class="fl">手续费：{{fee}}</div>
-                    <div class="fr">元</div>
-                </div>
-                <div class="group-item">
-                    <div class="fl">返回余额：{{returnMoney}}</div>
                     <div class="fr">元</div>
                 </div>
                 <div class="group-item">
@@ -112,35 +100,32 @@ export default {
     data(){
         return{
             accountData:[], //账户余额
-            currencyNum: 1, 
-            currencyList: [
-                // { text: '普通会员', value: 0 },
-                // { text: '报单中心', value: 1 },
-                // { text: '经理', value: 2 },
-                // { text: '大区', value: 3 },
-                // { text: '全国总代', value: 4 }
-            ],
-            addressUrl:'',
             nowIndex:0, //支付方式选中
             type:3, //提现方式，默认3支付宝
             // 提现方式
             wayArr:[
                 {type:3,icon:'/static/images/user/alipay-icon.png'},
-                // {type:2,icon:'/static/images/user/bank-card.png'},
+                {type:2,icon:'/static/images/user/bank-card.png'},
             ],
             alipay:'', //支付宝账号
             alipayName:'', //真实姓名
+            showBank:false, //显示银行卡上拉列表
+            bankDefault:'工商银行', 
+            bankNumber:'',
+            bankList:[
+                // {bankName:'工商银行',bankNumber:'6228480402564890018'},
+                // {bankName:'中国银行',bankNumber:'6228480402564890019'},
+                // {bankName:'招商银行',bankNumber:'6228480402564890020'},
+            ],
             money:'', //提现金额
             rate:'', //费率
             fee:0, //手续费
-            returnMoney:0 ,//退回余额
-            isClick:false 
         }
     },
     created(){
         this.reqAccount();
+        this.getBankList();
         this.getAlipayInfo();
-        this.getCurrencyList();
     },
     computed:{
         /**
@@ -148,8 +133,7 @@ export default {
          */
         computedMoney(){
             this.fee = (this.money * this.rate).toFixed(2);
-            this.returnMoney = (this.money * 0.2).toFixed(2); 
-            let actualMoney = new Number(this.money - this.fee - this.returnMoney);
+            let actualMoney = new Number(this.money - this.fee);
             return actualMoney.toFixed(2)
         }
     },
@@ -170,33 +154,47 @@ export default {
         },
 
         /**
-         * 获取币种列表
+         * 获取银行卡列表
          */
-        getCurrencyList(){
-            let array = [];
-            let url = 'user/coin_info';
+        getBankList(){
+            var url = 'user/bank_card';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization
             }).then((res) => {
                 if(res.data.status == 200){
-                    // console.log(res)
-                    array = res.data.data;
-                    array.forEach((item) => {
-                        this.currencyList.push({text:item.coin_name,value:item.id})
-                    })
-                   console.log(this.currencyList)
-                }else{
-                    this.$toast(res.data.msg)
-                }
+                    this.bankList = res.data.data;
+                    this.bankDefault = res.data.data[0].bank_name;
+                    this.bankNumber = res.data.data[0].bank_card;
+                }                
+            }).catch((error) => {
+                alert("请求失败：" + error)
             })
         },
 
-         /**
+        /**
          * 选择方式
          */
         selectType(index,type){
             console.log(type)
             this.nowIndex = index;
+        },
+
+        /**
+         * 显示银行卡列表上拉
+         */
+        bankShow(){
+            this.showBank = true;
+        },
+
+        /**
+         * 选择银行卡
+         */
+        selectBank(item){
+            this.bankDefault = item.bank_name;//当前选中
+            this.bankNumber = item.bank_card;
+            setTimeout(() => {
+                this.showBank = !this.showBank;
+            },200)
         },
 
         /**
@@ -224,34 +222,22 @@ export default {
          * 全部提现
          */
         allWithdrawal(){
-            this.money = this.accountData.remainder_money;
+            this.money = this.accountData.remainder_money
         }, 
         
         /**
          * 申请提现
          */
         confirmWithdrawal(){
-         
-            if(!this.addressUrl){
-                this.$toast('请输入地址')
-                return false
-            }
-            else if(!this.money){
+            if(!this.money){
                 this.$toast('请输入提现金额')
                 return false
             }
-            else if(this.isClick){
-                return
-            }
-            this.isClick = true;
-
             let url = 'user/withdrawal';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
                 money:this.money,
-                id:this.currencyNum,
-                coin_address:this.addressUrl
-                // withdraw_type:this.type
+                withdraw_type:this.type
             }).then((res) => {
                 if(res.data.status == 200){
                     this.$toast(res.data.msg)
@@ -263,9 +249,8 @@ export default {
                 }else{
                     this.$toast(res.data.msg)
                 }
-                this.isClick = false
             }).catch((error) => {
-                this.isClick = false
+
             })
         }
 
@@ -328,7 +313,8 @@ export default {
                 .add-card
                     height 50px
                     font-size 24px
-                    border 2px solid #ccc
+                    color #bfbfbf
+                    border 2px dashed #bfbfbf
                     border-radius 6px
                     padding 0 15px
                     box-sizing border-box
@@ -341,41 +327,6 @@ export default {
                         background url("/static/images/user/add-card.png") no-repeat center center
                         background-size 100%
                         margin-right 10px
-            .group-item
-                width 100%
-                height 88px
-                font-size 28px
-                border 1px solid #ccc
-                border-radius 10px 
-                padding 0 20px 0 2px
-                box-sizing border-box  
-                display flex  
-                align-items center
-                .van-dropdown-menu
-                    width 100%
-                    background none
-                .van-dropdown-menu /deep/ .van-dropdown-menu__item
-                    justify-content space-between      
-                    .van-dropdown-menu__title
-                        width 100%   
-            .input-group
-                width 100%
-                height 88px
-                font-size 28px
-                border 1px solid #ccc
-                margin-top 30px
-                border-radius 10px 
-                padding 0 20px
-                box-sizing border-box  
-                display flex  
-                align-items center
-                .sub-title
-                    width 130px
-                input 
-                    width 100%
-                    height 50px
-                    &::-webkit-input-placeholder
-                        color #8b8b8b      
             .account-wrap
                 height 70px
                 display flex
@@ -399,6 +350,23 @@ export default {
                     background url("/static/images/user/right-arrow2.png") no-repeat center center
                     background-size 8px 14px
                     padding 10px 
+            .bankPopup /deep/ .van-cell__value
+                flex none
+            .bankPopup 
+                .card-list
+                    padding 0 24px
+                    box-sizing border-box
+                    .card-item
+                        width 100%
+                        height 88px
+                        font-size 26px
+                        display flex
+                        align-items center
+                        .bank
+                            width 140px
+                            margin-right 20px
+                        .card-num
+                            flex 1
         .withdrawal-money
             h3
                 line-height 90px

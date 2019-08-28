@@ -108,7 +108,7 @@ export default {
             display flex
             align-items center
             justify-content space-between
-            background-color #ffc9b4
+            background-color #c6e1ff
             span
                 flex 1 
                 text-align center
@@ -118,13 +118,13 @@ export default {
             height 70px
             display flex
             align-items center
-            background-color #fff4f0
+            background-color #f3f9ff
             .column
                 flex 1
                 text-align center
                 font-size 22px
             &:nth-child(even)
-                background-color #ffede7
+                background-color #ecf4fc
         .none
             text-align center
             margin 150px auto

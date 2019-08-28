@@ -1,90 +1,30 @@
 <template>
     <div class="Purchase">
-        <!-- 头部组件 -->
-        <TopHeader custom-title="投资购买">
-            <i slot="backBtn" class="iconfont icon-fanhui"></i>
-        </TopHeader>
+        <TopHeader custom-title="我要报单">
+			<i slot="backBtn" class="iconfont icon-fanhui"></i>
+			<router-link to="/Investment" slot="rightBtn" tag="span">报单记录</router-link>
+		</TopHeader>
 
         <div class="content">
-            <div class="module-box">
-                <div class="row-line">
-                    <div class="sub-title">当前投资币：</div>
-                    <div class="text">
-                        <input type="number" placeholder="请输入投资币" v-model="currencyVal" @blur.prevent="validateVal()" ref="currencyVal">
+            <div class="purchase-list">
+                <div class="purchase-item" v-for="(item,index) in memberList" :key="index" @click="singerSelected(item)">
+                    <div class="sub-title">{{item.cardmoney}}</div>
+                    <div class="check">
+                        <input type="radio" :checked="item.checked" name="cardmoney" >
                     </div>
                 </div>
             </div>
-
-            <div class="module-box">
-                <div class="row-line">
-                    <div class="sub-title">当前投资金额：</div>
-                    <div class="text">{{calcAmount}}</div>
-                </div>
+            
+            <div class="uploader">
+                <van-uploader
+                    v-model="fileList"
+                    multiple
+                    :max-count="1"
+                    upload-text = "添加图片" 
+                    />
+                <p class="vouchers">上传凭证</p>
             </div>
 
-            <div class="module-box">
-                <div class="row-line">
-                    <div class="sub-title">商家ID：</div>
-                    <div class="text">
-                        <input type="number" placeholder="请输入商家id" v-model="otc_id">
-                    </div>
-                </div>
-            </div>
-
-            <div class="address-links">
-                <div class="link-item" v-for="(item,index) in linkArr" :key="index">
-                    <div class="sub-title">{{item.coin_name}}:</div>
-                    <div class="text">{{item.coin_address}}</div>
-                    <div class="copy-btn"
-                        v-clipboard:copy="item.coin_address"
-                        v-clipboard:success="onCopy"
-                        v-clipboard:error="onError"
-                    >复制</div>
-                </div>
-                 <!-- <div class="link-item">
-                    <div class="sub-title">ETH:</div>
-                    <div class="text">baidu.com</div>
-                    <div class="copy-btn">复制</div>
-                </div>
-                <div class="link-item">
-                    <div class="sub-title">SDT:</div>
-                    <div class="text">baidu.com</div>
-                    <div class="copy-btn">复制</div>
-                </div> -->
-            </div>
-
-            <!-- <div class="module-box">
-                <div class="text-container">
-                    <div class="row-line">
-                        <div class="sub-title">收款人:</div>
-                        <div class="text">{{receiptData.username}}</div>
-                    </div>
-                    <div class="row-line">
-                        <div class="sub-title">电话:</div>
-                        <div class="text">{{receiptData.iphone}}</div>
-                    </div>
-                    <div class="row-line">
-                        <div class="sub-title">账号:</div>
-                        <div class="text">{{receiptData.bank_card}}</div>
-                    </div>
-                    <div class="row-line">
-                        <div class="sub-title">银行:</div>
-                        <div class="text">{{receiptData.bank_name}}</div>
-                    </div>
-                </div>
-            </div> -->
-
-            <div class="module-box upload-wrap">
-                <div class="upload-content">
-                    <van-uploader
-                        v-model="fileList"
-                        multiple
-                        :after-read="afterRead"
-                        :max-count="1"
-                        />
-                </div>
-            </div>
-            <div class="vouchers">上传凭证</div>
 
             <div class="confirm-btn" @click="submitClick()">提交</div>
 
@@ -103,47 +43,39 @@ export default {
     },
     data(){
         return{
+            level_id:'',
+            memberList:[], //套餐列表
             fileList: [], //上传预览图
-            currencyVal:'',
-            scale:'', //比例
-            currentAmount:'', //当前投资金额
-            otc_id:'', //商家id
-            receiptData:[], //收款信息
-            linkArr:[
-                // {name:"BTC",url:"baidu.com"},
-                // {name:"ETH",url:"baidu.com"},
-                // {name:"SDT",url:"zhifengwangluo.com"},
-            ]
-        }
-    },
-
-    computed:{
-        /**
-         * 计算当前投资金额
-         */
-        calcAmount(){
-            let currentAmount = new Number(this.currencyVal * this.scale);
-            return currentAmount.toFixed(2);
         }
     },
 
     created(){
-        this.reqData();
-        this.reqCoinInfo();
+        this.getMemberList();
     },
 
     methods:{
         /**
-         * 请求数据
+         * 选择套餐
          */
-        reqData(){
-            let url = 'pay/investment';
+        singerSelected(item){
+            this.memberList.forEach(item => {
+                item.checked = false
+            });
+            this.$set(item,'checked',true);
+            this.level_id = item.level; //套餐id
+        },
+
+        /**
+         * 获取套餐列表
+         */
+        getMemberList(){
+            var url = 'user/member_list';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
             }).then((res) => {
                 if(res.data.status == 200){
-                    this.scale = (res.data.data.bili[1]) / res.data.data.bili[0];
-                    this.receiptData = res.data.data.info;
+                    this.memberList = res.data.data;
+                    this.level_id = res.data.data[0].level;
                 }
                 else if(res.data.status == 999){
                     this.$store.commit('del_token'); 
@@ -157,52 +89,6 @@ export default {
             }).catch((error) => {
                 alert("请求失败:" + error)
             })
-        },
-
-        /**
-         * 币种列表
-         */
-        reqCoinInfo(){
-            let url = 'user/coin_info';
-            this.$axios.post(url,{
-                token:this.$store.getters.optuser.Authorization,
-            }).then((res) => {
-                if(res.data.status == 200){
-                    this.linkArr = res.data.data;
-                }
-                else if(res.data.status == 999){
-                    this.$store.commit('del_token'); 
-                    setTimeout(() => {
-                        this.$router.push("/Login");
-                    }, 1000);
-                }
-                else{
-                    this.$toast(res.data.msg)
-                }
-            }).catch((error) => {
-                alert("请求失败:" + error)
-            })
-        },
-
-        /**
-         * 校验输入框的值
-         */
-        validateVal(){
-            if(this.currencyVal == ''){
-                this.$toast('投资币的值不可为空');
-                return
-            }
-            else if(this.currencyVal < 600){
-                this.$toast('投资币不可低于600');
-                return 
-            }
-            else if(this.currencyVal % 600 !== 0){
-                this.$toast('投资币必须是600的倍数');
-                return 
-            }
-            else{
-                return true
-            }
         },
 
         /**
@@ -235,57 +121,41 @@ export default {
          * 提交
          */
         submitClick(){
-            let fileObj = this.fileList[0];
+            var fileObj = this.fileList[0];
 
-            if(this.validateVal()){
-                if(this.otc_id == ''){
-                    return this.$toast('商家id不能为空');
-                }
-                else if(fileObj == '' || typeof(fileObj) == 'undefined'){
-                    return this.$toast('亲,还没有选择上传的凭证哦!')
+            if(fileObj == '' || typeof(fileObj) == 'undefined'){
+                return this.$toast('亲,还没有选择上传的凭证哦!')
+            }else{
+                fileObj = this.fileList[0].content;
+            }
+
+            var url = 'pay/investmentsub';
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization,
+                level_id:this.level_id,
+                image:fileObj
+            }).then((res) => {
+                if(res.data.status == 200){
+                    this.$toast({message:res.data.msg,duration:2000})
+                    setTimeout(() => {
+                        this.$router.replace('/Investment')
+                    },2000)
+                }else if(res.data.status == 999){
+                    this.$store.commit('del_token'); //清除token
+                    setTimeout(()=>{
+                        this.$router.push('/Login')
+                    },1000)
                 }
                 else{
-                    fileObj = this.fileList[0].content;
+                    this.$toast(res.data.msg)
                 }
-
-                let url = 'pay/investmentsub';
-                this.$axios.post(url,{
-                    token:this.$store.getters.optuser.Authorization,
-                    currency:this.currencyVal,
-                    otc_id:this.otc_id,
-                    image:fileObj
-                }).then((res) => {
-                    if(res.data.status == 200){
-                        this.$toast({message:res.data.msg,duration:2000})
-                        setTimeout(() => {
-                            this.$router.push('/Home')
-                        },2000)
-                    }else if(res.data.status == 999){
-                        this.$store.commit('del_token'); //清除token
-                        setTimeout(()=>{
-                            this.$router.push('/Login')
-                        },1000)
-                    }
-                    else{
-                        this.$toast(res.data.msg)
-                    }
-                }).catch((error) => {
-                    alert('请求错误:' + error)
-                })
-            }
+            }).catch((error) => {
+                alert('请求错误:' + error)
+            })
             
         },
 
-        // 复制成功回调
-        onCopy:function(e){
-            console.log(e)
-            this.$toast('复制成功');
-        },
-
-        // 复制失败回调
-        onError:function(){
-            this.$toast('复制失败');
-        }
+     
     },
    
 }
@@ -294,110 +164,79 @@ export default {
 <style lang="stylus" scoped>
 .Purchase
     & /deep/ .TopHeader
-        background #f2f2f2 
-        border none
-    .content    
+        color #ffffff
+        background linear-gradient(to right,#00dafd 0%,#00a9ff 100%)
+    .content  
+        margin-top 40px  
         padding 0 24px
         box-sizing border-box
-        .module-box
+        .purchase-item
             width 100%
-            background-color #ffffff
+            height 100px
+            font-size 30px
+            background-color #fff
             border-radius 10px
             margin-bottom 20px
-            padding 20px
+            padding 0 20px
             box-sizing border-box
-            .text-container
-                margin-left 170px
-            .row-line
-                font-size 28px
-                height 60px
-                display flex
-                align-items center
-                .sub-title
-                    margin-right 10px
-                .text
-                    flex 1
-                    word-break keep-all
-                    white-space nowrap
-                    overflow hidden
-                    text-overflow ellipsis 
-                    input 
-                        width 200px
-                        line-height 50px
-        .address-links
-            width 100%
-            background-color #ffffff
-            border-radius 10px
-            margin-bottom 20px
-            .link-item
-                font-size 26px
-                height 70px
-                display flex
-                align-items center
-                border-bottom 1px solid #eee
-                padding 0 20px
-                box-sizing border-box
-                &:last-child
-                    border-bottom none
-                .sub-title
-                    margin-right 10px
-                .text
-                    flex 1
-                    word-break keep-all
-                    white-space nowrap
-                    overflow hidden
-                    text-overflow ellipsis 
-                .copy-btn
-                    width 80px
-                    height 40px
-                    font-size 26px
-                    text-align center
-                    line-height 40px
-                    color #ffffff
-                    background-color #ff164d
-                    border-radius 10px
-        .upload-wrap
-            height 300px
             display flex
             align-items center
-            justify-content center
-            .upload-content
-                width 558px
-                height 250px
-                background-color #eeeeee
-                border-radius 10px
-                overflow hidden
-                display flex
-                align-items center
-                justify-content center
-                .van-uploader
-                    max-width 558px
-                    max-height 250px
-                .van-uploader /deep/ .van-uploader__upload
-                    width 109px
-                    height 109px
-                    margin 0
-                    background url("/static/images/investment/add-upload.png") no-repeat
-                    background-size 109px 109px
+            .sub-title
+                flex 1
+            .check
+                input 
+                    width 50px
+                    height 50px
+                    border 1px solid #ebebeb
+                    box-shadow 0 0 5px #ebebeb
+                    appearance none
+                    outline none
+                input:checked:after
+                    width 52px
+                    height 52px
+                    content ''
+                    display block
+                    background url("/static/images/investment/selected.png") no-repeat
+                    background-size 100%
                     border none
-                    .van-icon
-                        display none
-                .van-uploader /deep/ .van-uploader__preview
-                    margin 0
-                .van-uploader /deep/ .van-uploader__preview-image
-                    width auto
-                    height auto
-                    max-width 558px
-                    max-height 250px
-        .vouchers
-            font-size 30px
-            text-align center
+                    box-shadow none
+        .uploader
+            width 100%
+            height 400px
+            background-color #fff
+            display flex
+            flex-direction column
+            justify-content center
+            align-items center
+            .van-uploader /deep/ .van-uploader__upload
+                border 3px dashed #e5e5e5
+                .van-icon
+                    width 45px
+                    height 40px
+                    background url("/static/images/investment/camera-icon.png") no-repeat
+                    background-size 45px 40px
+                .van-icon-plus:before
+                    display none
+            .van-uploader /deep/ .van-uploader__upload
+                margin 0
+            .van-uploader /deep/ .van-uploader__preview
+                 margin 0
+            .van-uploader /deep/ .van-uploader__preview-image
+                width auto
+                height auto
+                max-width 558px
+                max-height 250px
+                overflow hidden
+            .vouchers
+                font-size 24px
+                color #151515
+                margin-top 15px
         .confirm-btn
             width 92%
             height 88px
             font-size 30px
             color #ffffff
-            background-color #ff4d4d
+            background linear-gradient(to right,#00dafd 0%,#00a9ff 100%)
             text-align center
             line-height 88px
             border-radius 40px

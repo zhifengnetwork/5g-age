@@ -16,6 +16,8 @@ import Chat from '@/pages/chat/Chat'
 
 // 通讯录
 import MailList from '@/pages/maillist/MailList'
+// 添加好友
+import AddFriends from '@/pages/maillist/AddFriends'
 
 // 投资记录
 import Investment from '@/pages/investment/Investment'
@@ -46,6 +48,10 @@ import CashWithdrawal from '@/pages/user/accountBalance/CashWithdrawal'
 import WithdrawalDetails from '@/pages/user/accountBalance/WithdrawalDetails'
 // 支付宝账号编辑
 import EditAlipay from '@/pages/user/accountBalance/EditAlipay'
+// 银行卡列表
+import BankCard from '@/pages/user/accountBalance/BankCard'
+// 添加银行卡
+import AddBankCard from '@/pages/user/accountBalance/AddBankCard'
 // 赠送
 import Give from '@/pages/user/accountBalance/Give'
 // 赠送记录
@@ -126,7 +132,6 @@ const router= new Router({
 		{
 			path: '/Chat',
 			name: 'Chat',
-			// component:() => import('@/pages/home/Home'),//按需加载
 			component: (resolve) => require(['@/pages/chat/Chat'],resolve),
 			meta:{requireAuth:true}
 		},
@@ -137,8 +142,16 @@ const router= new Router({
 		{
 			path: '/MailList',
 			name: 'MailList',
-			// component:() => import('@/pages/home/Home'),//按需加载
 			component: (resolve) => require(['@/pages/maillist/MailList'],resolve),
+			meta:{requireAuth:true}
+		},
+		/**
+		 * 添加好友
+		 */
+		{
+			path: '/AddFriends',
+			name: 'AddFriends',
+			component: (resolve) => require(['@/pages/maillist/AddFriends'],resolve),
 			meta:{requireAuth:true}
 		},
 
@@ -161,6 +174,16 @@ const router= new Router({
 			component: (resolve) => require(['@/pages/investment/Purchase'],resolve),
 			meta:{requireAuth:true}
 		},
+
+		/**
+		 * 签到
+		 */
+		// {
+		// 	path: '/checkin',
+		// 	name: 'checkin',
+		// 	component: (resolve) => require(['@/pages/sign/checkin'],resolve),
+		// 	meta:{requireAuth:true}
+		// },
 		
 		/**
 		 * 公告
@@ -261,11 +284,18 @@ const router= new Router({
 			component:() => import('@/pages/user/accountBalance/EditAlipay'),
 			meta:{requireAuth:true}
 		},
+		// 银行卡列表
+		{
+			path: '/user/BankCard',
+			name: 'BankCard',
+			component:() => import('@/pages/user/accountBalance/BankCard'),
+			meta:{requireAuth:true}
+		},
 		// 银行卡编辑
 		{
-			path: '/user/EditBankCard',
-			name: 'EditBankCard',
-			component:() => import('@/pages/user/accountBalance/EditBankCard'),
+			path: '/user/AddBankCard',
+			name: 'AddBankCard',
+			component:() => import('@/pages/user/accountBalance/AddBankCard'),
 			meta:{requireAuth:true}
 		},
 

@@ -58,7 +58,7 @@
                         <span class="text">积分</span>
                     </p>
                 </router-link>
-                <router-link to="/user/MyBenefits" class="module-item" tag="div">
+                <router-link to="/user/ProfitDetails" class="module-item" tag="div">
                     <p class="number">{{userData.distribut_money}}</p>
                     <p class="sub-title">
                         <!-- <i class="icon"><img src="/static/images/user/profit-icon.png" /></i> -->
@@ -78,26 +78,26 @@
             
             <div class="link-list">
                 <router-link to="#" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/add-friends-icon.png" /></span>
-                    <span class="text">新朋友</span>
+                    <span class="icon"><img src="/static/images/user/sign-in-icon.png" /></span>
+                    <span class="text">签到</span>
                 </router-link>
                 <router-link to="/user/TeamList" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/team-icon.png" /></span>
                     <span class="text">我的团队</span>
                 </router-link>
-                <router-link to="#" class="link-item" tag="div">
+                <router-link to="/Purchase" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/wybd-icon.png" /></span>
                     <span class="text">我要报单</span>
                 </router-link>
-                 <router-link to="#" class="link-item" tag="div">
+                 <router-link to="/user/ProfitDetails" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/jlmx-icon.png" /></span>
                     <span class="text">奖励明细</span>
                 </router-link>
-                <router-link to="/user/TeamList" class="link-item" tag="div">
+                <router-link to="/user/CashWithdrawal" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/xxtx-icon.png" /></span>
                     <span class="text">线下提现</span>
                 </router-link>
-                <router-link to="#" class="link-item" tag="div">
+                <router-link to="/user/BankCard" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/bank-card-icon.png" /></span>
                     <span class="text">银行卡列表</span>
                 </router-link>

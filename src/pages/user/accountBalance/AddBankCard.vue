@@ -1,5 +1,5 @@
 <template>
-    <div class="EditBankCard">
+    <div class="AddBankCard">
         <!-- 头部组件 -->
         <TopHeader custom-title="添加银行卡">
             <i slot="backBtn" class="iconfont icon-fanhui"></i>
@@ -16,22 +16,22 @@
                 <div class="input-group">
                     <div class="sub-title">银行卡名称:</div>
                     <div class="inp-wrap">
-                        <input type="text" placeholder="如工商银行" v-focus v-model="bankName" />
+                        <input type="text" placeholder="如工商银行" v-model="bankName" />
                     </div>
                 </div>
                 <div class="input-group">
                     <div class="sub-title">银行卡号:</div>
                     <div class="inp-wrap">
-                        <input type="text" placeholder="请输入银行卡号" v-focus v-model="bankNumber" />
+                        <input type="text" placeholder="请输入银行卡号"  v-model="bankNumber" />
                     </div>
                 </div>
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <div class="sub-title">开户地址:</div>
                     <div class="inp-wrap">
-                        <input type="text" placeholder="请输入开户地址" v-focus v-model="bankAddress" />
+                        <input type="text" placeholder="请输入开户地址" v-model="bankAddress" />
                     </div>
-                </div>
-                <div class="confirm-btn" @click="saveData()">确定</div>
+                </div> -->
+                <div class="confirm-btn" @click="addBankCard()">确定</div>
             </div>
         </div>
 
@@ -41,7 +41,7 @@
 <script>
 import TopHeader from "@/pages/common/header/TopHeader"
 export default {
-    name:'EditBankCard',
+    name:'AddBankCard',
     components: {
         TopHeader,
     },
@@ -50,59 +50,39 @@ export default {
            realName:'', 
            bankName:'',
            bankNumber:'',
-           bankAddress:''
+        //    bankAddress:''
         }
     },
     created(){
-        this.getAlipayInfo();
+        
     },
 
     methods:{
         /**
-         * 获取支付宝账号信息
+         * 添加银行卡
          */
-        getAlipayInfo(){
-            let url = 'user/zfb_info';
-            this.$axios.post(url,{
-                token:this.$store.getters.optuser.Authorization
-            }).then((res) => {
-                if(res.data.status == 200){
-                    this.alipay = res.data.data.alipay
-                    this.alipayName = res.data.data.alipay_name
-                }else if(res.data.status == 999){
-                    this.$store.commit('del_token'); //清除token
-                }else{
-                    this.$toast(res.data.msg)
-                }
-            }).catch((error) => {
-
-            })
-        },
-
-        /**
-         * 保存数据
-         */
-        saveData(){
-            if(!this.alipay){
-                this.$toast('支付宝账号不能为空')
+        addBankCard(){
+            if(!this.realName){
+                this.$toast('姓名不能为空')
                 return false
             }
-            else if(!/^(?:\w+\.?)*\w+@(?:\w+\.)+\w+|\d{9,11}$/.test(this.alipay)){
-                this.$toast('请填写正确的支付宝账号')
+            else if(!this.bankName){
+                this.$toast('银行卡名称不能为空')
+                return false
+            }else if(!this.bankNumber){
+                this.$toast('银行卡号不能为空')
                 return false
             }
-            else if(!this.alipayName){
-                this.$toast('真实姓名不能为空')
-                return false
-            }else{
-                let url = 'user/zfb_edit';
+            else{
+                var url = 'user/add_bank_card';
                 this.$axios.post(url,{
                     token:this.$store.getters.optuser.Authorization,
-                    alipay:this.alipay,
-                    alipay_name:this.alipayName
+                    username:this.realName,
+                    bank_name:this.bankName,
+                    bank_card:this.bankNumber
                 }).then((res) => {
                     if(res.data.status == 200){
-                        this.$toast("修改成功");
+                        this.$toast(res.data.data);
                         setTimeout(() => {
 							this.$router.go(-1)
 						}, 2000);
@@ -121,7 +101,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.EditBankCard
+.AddBankCard
     & /deep/ .TopHeader
         background-color #f2f2f2
         border none
@@ -152,7 +132,7 @@ export default {
                 line-height 88px
                 text-align center
                 color #ffffff
-                background #ff4d4d
+                background #00c5fe
                 border-radius 40px
                 position fixed
                 left 50%

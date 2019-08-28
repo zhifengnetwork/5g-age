@@ -1,13 +1,13 @@
 <template>
     <div class="Give">
         <!-- 头部组件 -->
-        <TopHeader custom-title="赠送">
+        <TopHeader custom-title="转账">
             <i slot="backBtn" class="iconfont icon-fanhui"></i>
         </TopHeader>
         <div class="content">
             <div class="amount-money">
-                <div class="sub-title">我的余额</div>
-                <div class="money">{{userData.remainder_money | formatMoney}}</div>
+                <div class="sub-title">我的积分</div>
+                <div class="money">{{userData.remainder_money}}</div>
             </div>
             <div class="form-container">
                 <div class="input-group">
@@ -15,11 +15,7 @@
                     <input type="number" v-model="to_id">
                 </div>
                  <div class="input-group">
-                    <label>手机号码:</label>
-                    <input type="number" v-model="phone">
-                </div>
-                 <div class="input-group">
-                    <label>金额:</label>
+                    <label>积分:</label>
                     <input type="number" v-model="money">
                 </div>
             </div>
@@ -39,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="confirm-btn" @click="showPopup()">立即赠送</div>
+            <div class="confirm-btn" @click="showPopup()">立即转账</div>
 
         </div>
         
@@ -57,7 +53,7 @@ export default {
         return{
             userData:{},
             to_id:'',
-            phone:'',
+            // phone:'',
             money:'',
             payPassword:'',     //支付密码
             showKeyboard:false, //是否显示数字键盘
@@ -102,14 +98,14 @@ export default {
                 this.$toast('收款ID不能为空')
                 return false;
             }
-            else if(!this.phone){
-                this.$toast('手机号码不能为空')
-                return false;
-            }
-            else if(!/^1[3456789]\d{9}$/.test(this.phone)){
-                this.$toast('请填写正确的手机号码')
-                return false;
-            }
+            // else if(!this.phone){
+            //     this.$toast('手机号码不能为空')
+            //     return false;
+            // }
+            // else if(!/^1[3456789]\d{9}$/.test(this.phone)){
+            //     this.$toast('请填写正确的手机号码')
+            //     return false;
+            // }
             else if(this.money == ''){
                 this.$toast('转出金额不能为空')
                 return false;
@@ -143,12 +139,12 @@ export default {
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
                 to_user_id:parseInt(this.to_id),
-                iphone:this.phone,
+                // iphone:this.phone,
                 money:this.money,
                 pwd:this.payPassword
             }).then((res) => {
                 if(res.data.status == 200){
-                    this.$toast({message:'赠送成功',duration:2000})
+                    this.$toast({message:'转账成功',duration:2000})
                     setTimeout(() => {
                         this.$router.replace('/user/AccountBalance')
                     },2000)
@@ -220,6 +216,9 @@ export default {
         background #ffffff
         color #151515
     .content
+        width 100%
+        height 100%
+        background #ffffff
         padding 0 24px
         box-sizing border-box
         .amount-money

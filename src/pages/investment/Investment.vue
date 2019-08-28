@@ -1,21 +1,19 @@
 <template>
     <div class="Investment">
+        <TopHeader custom-title="报单记录">
+			<i slot="backBtn" class="iconfont icon-fanhui"></i>
+		</TopHeader>
+
         <div class="content">
             <div class="investment-list">
                 <div class="investment-item" v-for="(item,index) in recordData" :key="index">
-                    <div class="row-line">
-                        <div class="sub-title">投资金额 :</div>
-                        <div class="right">{{item.vigor_value}}</div>
-                    </div>
-                    <div class="row-line">
-                        <div class="sub-title">投资时间 :</div>
-                        <div class="right">{{item.create_time | formatDate}}</div>
-                    </div>
-                    <div class="row-line">
-                        <div class="sub-title">投资状态 :</div>
-                        <div class="right" v-show="item.state == 0">待审核</div>
-                        <div class="right" v-show="item.state == 1">失败</div>
-                        <div class="right" v-show="item.state == 2">成功</div>
+                    <div class="money">报单金额：{{item.invest}}</div>
+                    <div class="order-id">订单号:{{item.order_sn}}</div>
+                    <div class="date">报单时间:{{item.create_time | formatDate}}</div>
+                    <div class="status">报单状态：
+                        <span v-show="item.state == 0">待审核</span>
+                        <span v-show="item.state == 1">失败</span>
+                        <span v-show="item.state == 2">成功</span>
                     </div>
                 </div>
             </div>
@@ -28,17 +26,16 @@
 
         </div>
 
-        <!-- 底部 -->
-        <Navigate></Navigate>
+       
     </div>
 </template>
 
 <script>
-import Navigate from "@/pages/common/footer/Navigate"
+import TopHeader from "@/pages/common/header/TopHeader"
 export default {
     name:'Investment',
     components: {
-        Navigate,
+        TopHeader,
     },
     data(){
         return{
@@ -48,37 +45,14 @@ export default {
     },
     created(){
         this.$store.commit('showLoading')
-        this.reqUser();
-        
+        this.getRecordData();
     },
     methods:{
-        reqUser() {
-            let url = 'user/user_info'
-            this.$axios.post(url,{
-                token:this.$store.getters.optuser.Authorization
-            })
-            .then((res)=>{   
-                if(res.data.status === 200){
-                    this.user_id = res.data.data.id;
-                    this.getRecordData();
-                }
-                else if(res.data.status === 999){
-                    this.$store.commit('del_token'); //清除token;
-                    setTimeout(()=>{
-                        this.$router.push('/Login')
-                    },1000)
-                }
-                else{
-                    this.$toast(res.data.msg)
-                }
-            })
-        },
-
         /**
-         * 请求投资记录数据
+         * 投资记录
          */
         getRecordData(){
-            let url = 'user/record_list';
+            var url = 'user/record_list';
             this.$axios.post(url,{
                 user_id:this.user_id,
                 token:this.$store.getters.optuser.Authorization
@@ -86,7 +60,6 @@ export default {
                 if(res.status == 200){
                     this.recordData = res.data;
                     this.$store.commit('hideLoading')
-                    console.log(this.recordData)
                 }
             }).catch((error) => {
                 alert("请求失败：" + error)
@@ -134,21 +107,27 @@ export default {
             margin-top 20px
             .investment-item
                 width 100%
-                height 200px
+                height 146px
                 font-size 30px
                 background-color #fff
                 border-radius 10px
-                padding 0 36px
+                padding 20px
                 box-sizing border-box
-                display flex
-                justify-content center
-                flex-direction column
                 margin-bottom 20px
-                .row-line
-                    display flex
-                    line-height 56px
-                    .sub-title
-                        margin-right 15px
+                div
+                    float left
+                    line-height 50px
+                    margin-bottom 10px
+                div:nth-child(even)
+                    float right
+                .order-id
+                    font-size 24px
+                .status
+                    font-size 24px
+                    color #666666
+                    span 
+                        color #00a8ff
+               
         .none
             text-align center
             margin 0px auto

@@ -199,7 +199,9 @@ export default {
         .form-group
             width 100%
             height 90px
-            border-bottom 1px solid #f56817
+            border 1px solid #ebebeb
+            margin-bottom 20px
+            border-radius 10px
             display flex
             align-items center
             .icon
@@ -237,10 +239,12 @@ export default {
             border-radius 40px
             font-size 36px
             color #ffffff
-            background linear-gradient(to right, #f9a775,#fb946a)
+            background linear-gradient(to right, #00d7fd,#00a9ff)
+            opacity .6
             margin-top 88px
         .hiLine
-            background linear-gradient(to right, #f66716,#f94e08)
+            // background linear-gradient(to right, #f66716,#f94e08)
+            opacity 1
         .jump-link
             width 100%
             font-size 28px

@@ -7,8 +7,8 @@
 
         <div class="content">
             <div class="amount-money">
-                <div class="sub-title">我的余额</div>
-                <div class="money">{{accountData.remainder_money | formatMoney}}</div>
+                <div class="sub-title">我的积分</div>
+                <div class="money">{{accountData.remainder_money}}</div>
             </div>
             <div class="group-btn">
                 <router-link to="/user/CashWithdrawal">
@@ -16,7 +16,7 @@
                 </router-link>
                 
                 <router-link to="/user/Give">
-                    <div class="link-btn link-btn2">赠送</div>
+                    <div class="link-btn link-btn2">转账</div>
                 </router-link>
             </div>
             <div class="link-list">               
@@ -28,7 +28,7 @@
                 </router-link>
                 <router-link to="/user/GiveRecord">
                     <div class="link-item">
-                        <div class="text">赠送记录</div>
+                        <div class="text">转账记录</div>
                         <div class="more"></div>
                     </div>
                 </router-link>

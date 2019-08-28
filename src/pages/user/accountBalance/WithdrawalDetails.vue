@@ -9,14 +9,14 @@
             <div class="tab-container" v-if="withdrawalData.length > 0">
                 <div class="thead">
                     <span>申请日期</span>
-                    <span>金额</span>
+                    <span>积分</span>
                     <span>手续费</span>
                     <span>审核状态</span>
                 </div>
                 <div class="withdrawal-list">
                     <div class="item" v-for="(item,index) in withdrawalData" :key="index">
                         <div class="column">{{item.createtime | formatDate}}</div>
-                        <div class="column">￥{{item.money}}</div>
+                        <div class="column">{{item.money}}</div>
                         <div class="column">￥{{item.taxfee}}</div>
                         <div class="column state" v-if="item.status === 1">审核中</div>
                         <div class="column state succeed" v-if="item.status === 2">审核成功</div>
@@ -115,8 +115,6 @@ export default {
         width 100%
         height 100%
         margin-top 20px
-        padding 0 24px
-        box-sizing border-box
         position relative
         .tab-container
             .thead  
@@ -125,7 +123,7 @@ export default {
                 display flex
                 align-items center
                 justify-content space-between
-                background-color #ffc9b4
+                background-color #c6e1ff
                 span 
                     text-align center
                     display block 
@@ -142,7 +140,7 @@ export default {
                 height 70px
                 display flex
                 align-items center
-                background-color #fff4f0
+                background-color #f3f9ff
                 .column
                     text-align center
                     font-size 20px
@@ -155,7 +153,7 @@ export default {
                 .column:nth-child(4)
                     width 25%
                 &:nth-child(even)
-                    background-color #ffede7
+                    background-color #ecf4fc
                 & .state 
                     color #151515
                 & .state.succeed
