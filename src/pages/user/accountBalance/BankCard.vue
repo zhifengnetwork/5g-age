@@ -10,9 +10,9 @@
             <div class="bankList">
                 <div class="card-item" v-for="(item,index) in bankList" :class="item.type">
                     <div class="card-name">{{item.bank_name}}</div>
-                    <div class="card-number">{{item.bank_card}}</div>
+                    <div class="card-number">{{item.bank_card | replaceNum}}</div>
                 </div>
-                
+
                 <!-- <div class="card-item ICBC-sty" v-for="(item,index) in bankList" >
                     <div class="card-name">{{item.bank_name}}</div>
                     <div class="card-number">{{item.bank_card}}</div>
@@ -38,6 +38,13 @@
                     <div class="card-number">****  ****  ****  0011</div>
                 </div> -->
             </div>
+
+            <!-- 无数据 -->
+            <div class="none" v-show="bankList.length == 0">
+                <img src="/static/images/public/none.png"/>
+                <p>暂无相关数据</p>
+            </div>
+
         </div>
 
     </div>
@@ -77,7 +84,13 @@ export default {
                 alert("请求失败：" + error)
             })
         }
-    }
+    },
+    filters:{
+		//替换*号
+        replaceNum:function(val){            
+            return new Array(13).join('*') + val.slice(val.length - 4);
+        }
+	}
 }
 </script>
 
@@ -130,6 +143,14 @@ export default {
                 &.BC-sty
                     background url("/static/images/user/BC-bg.png") no-repeat
                     background-size 100%
+        .none
+            text-align center
+            margin 150px auto
+            img
+                width 80px
+            p
+                margin 10px auto
+                font-size 24px
 
 
         

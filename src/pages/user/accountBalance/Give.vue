@@ -11,7 +11,7 @@
             </div>
             <div class="form-container">
                 <div class="input-group">
-                    <label>收款ID:</label>
+                    <label>收款账号:</label>
                     <input type="number" v-model="to_id">
                 </div>
                  <div class="input-group">
@@ -52,12 +52,13 @@ export default {
     data(){
         return{
             userData:{},
+            isPwd:false, //未设置密码
             to_id:'',
             // phone:'',
             money:'',
             payPassword:'',     //支付密码
             showKeyboard:false, //是否显示数字键盘
-            isClick:false
+            isClick:false,
         }
     },
     created(){
@@ -77,6 +78,7 @@ export default {
                 this.$store.commit('hideLoading')
                 if(res.data.status === 200){
                     this.userData = res.data.data;
+                    this.isPwd = res.data.data.set_pwd;
                 }
                 else if(res.data.status === 999){
                     this.$store.commit('del_token'); //清除token;
@@ -119,7 +121,13 @@ export default {
          * 显示键盘 
          */
         showPopup(){
-            if(this.validateAll()){
+            if(this.isPwd == false){
+                this.$toast({message:'请先设置支付密码',duration:2000})
+                setTimeout(() => {
+                    this.$router.replace('/user/SetPassword')
+                },2000) 
+            }
+            else if(this.validateAll()){
                 // 显示数字密码键盘
                 this.showKeyboard = true;
             }

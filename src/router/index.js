@@ -19,6 +19,9 @@ import MailList from '@/pages/maillist/MailList'
 // 添加好友
 import AddFriends from '@/pages/maillist/AddFriends'
 
+// 签到
+import Sign from '@/pages/sign/Sign'
+
 // 投资记录
 import Investment from '@/pages/investment/Investment'
 // 投资购买
@@ -178,12 +181,12 @@ const router= new Router({
 		/**
 		 * 签到
 		 */
-		// {
-		// 	path: '/checkin',
-		// 	name: 'checkin',
-		// 	component: (resolve) => require(['@/pages/sign/checkin'],resolve),
-		// 	meta:{requireAuth:true}
-		// },
+		{
+			path: '/Sign',
+			name: 'Sign',
+			component: (resolve) => require(['@/pages/sign/Sign'],resolve),
+			meta:{requireAuth:true}
+		},
 		
 		/**
 		 * 公告
@@ -409,7 +412,7 @@ const router= new Router({
 		// 重定向
 		{
 			path: '*',
-			redirect: '/Home'
+			redirect: '/User'
 		},
 
 	]

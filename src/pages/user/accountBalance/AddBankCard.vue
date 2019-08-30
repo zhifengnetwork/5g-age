@@ -14,10 +14,13 @@
                     </div>
                 </div>
                 <div class="input-group">
-                    <div class="sub-title">银行卡名称:</div>
+                    <!-- <div class="sub-title">银行卡名称:</div>
                     <div class="inp-wrap">
                         <input type="text" placeholder="如工商银行" v-model="bankName" />
-                    </div>
+                    </div> -->
+                    <van-dropdown-menu>
+                        <van-dropdown-item v-model="bankIndex" :options="bank_name_list" />
+                    </van-dropdown-menu>
                 </div>
                 <div class="input-group">
                     <div class="sub-title">银行卡号:</div>
@@ -47,29 +50,49 @@ export default {
     },
     data(){
         return{
-           realName:'', 
-           bankName:'',
-           bankNumber:'',
+            realName:'', 
+            bankName:'',
+            bankIndex: '', 
+            bank_name_list: [
+                // { text: '普通会员', value: 0 },
+            ],
+            bankNumber:'',
         //    bankAddress:''
         }
     },
     created(){
-        
+        this.getBankList();
     },
 
     methods:{
         /**
+         * 获取银行名称
+         */
+        getBankList(){
+            var url = 'user/bank_list';
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization
+            }).then((res) => {
+                if(res.data.status == 200){
+                    this.bank_name_list = res.data.data;
+                    this.bankIndex = res.data.data[0].value;
+                }
+            }).catch((error) => {
+
+            })
+        },
+
+        /**
          * 添加银行卡
          */
         addBankCard(){
+            console.log(this.bank_name_list[this.bankIndex -1].text)
+           
             if(!this.realName){
                 this.$toast('姓名不能为空')
                 return false
             }
-            else if(!this.bankName){
-                this.$toast('银行卡名称不能为空')
-                return false
-            }else if(!this.bankNumber){
+            else if(!this.bankNumber){
                 this.$toast('银行卡号不能为空')
                 return false
             }
@@ -78,7 +101,7 @@ export default {
                 this.$axios.post(url,{
                     token:this.$store.getters.optuser.Authorization,
                     username:this.realName,
-                    bank_name:this.bankName,
+                    bank_name:this.bank_name_list[this.bankIndex -1].text,
                     bank_card:this.bankNumber
                 }).then((res) => {
                     if(res.data.status == 200){
@@ -125,6 +148,17 @@ export default {
                 .inp-wrap   
                     input 
                         font-size 24px 
+                .van-dropdown-menu
+                    width 100%
+                    background none
+                .van-dropdown-menu /deep/ .van-dropdown-menu__item
+                    justify-content space-between      
+                    .van-dropdown-menu__title
+                        width 100%  
+                        font-size 30px
+                        padding-left 50px
+                .van-dropdown-menu /deep/ .van-dropdown-menu__title::after
+                    right 20px 
             .confirm-btn
                 width 92%
                 height 88px

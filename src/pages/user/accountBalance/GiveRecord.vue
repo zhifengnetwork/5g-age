@@ -9,14 +9,14 @@
             <div class="details-container">
                 <div class="thead">
                     <span>转账日期</span>
-                    <span>收款ID</span>
+                    <span>收款账号</span>
                     <span>积分</span>
                 </div>
                 <div class="record-list" v-if="transfercordData.length > 0">
                     <div class="record-item" v-for="(item,index) in transfercordData" :key="index">
                         <div class="column">{{item.create_time | formatDate}}</div>
                         <div class="column">{{item.id}}</div>
-                        <div class="column">{{item.balance}}</div>
+                        <div class="column">{{item.money}}</div>
                     </div>
                 </div>
 

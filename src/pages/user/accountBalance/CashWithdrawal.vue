@@ -24,7 +24,8 @@
                     </div>
                     <router-link to="/user/AddBankCard" class="add-card" tag="div"><i class="icon"></i>添加银行卡</router-link>
                 </div>
-                <!-- 账号信息 -->
+
+                <!-- 支付宝账号信息 -->
                 <router-link to="/user/EditAlipay">
                     <div class="account-wrap" v-show="nowIndex == 0">
                         <div class="account-msg">
@@ -35,8 +36,18 @@
                     </div>
                 </router-link>
 
+                <!-- 微信账号信息 -->
+                <div class="account-wrap" v-show="nowIndex == 1">
+                    <div class="account-msg">
+                        <div class="input-group">
+                            <input type="text" placeholder="请输入微信账号" v-model="wechat_account"/>
+                        </div>
+                    </div>
+                    
+                </div>
+
                 <!-- 银行卡信息 -->
-                <div class="account-wrap" v-show="nowIndex == 1" @click="bankShow()">
+                <div class="account-wrap" v-show="nowIndex == 2 && this.bankList.length > 0" @click="bankShow()">
                     <div class="account-msg">
                         <span class="name">{{bankDefault}}</span>
                         <span class="account-number">{{bankNumber}}</span>
@@ -100,17 +111,19 @@ export default {
     data(){
         return{
             accountData:[], //账户余额
-            nowIndex:0, //支付方式选中
+            nowIndex:0, //支付方式选中索引
             type:3, //提现方式，默认3支付宝
             // 提现方式
             wayArr:[
                 {type:3,icon:'/static/images/user/alipay-icon.png'},
-                {type:2,icon:'/static/images/user/bank-card.png'},
+                {type:2,icon:'/static/images/user/weChat-icon.png'},
+                {type:4,icon:'/static/images/user/bank-card.png'},
             ],
             alipay:'', //支付宝账号
             alipayName:'', //真实姓名
+            wechat_account:'', //微信账号
             showBank:false, //显示银行卡上拉列表
-            bankDefault:'工商银行', 
+            bankDefault:'', 
             bankNumber:'',
             bankList:[
                 // {bankName:'工商银行',bankNumber:'6228480402564890018'},
@@ -167,7 +180,7 @@ export default {
                     this.bankNumber = res.data.data[0].bank_card;
                 }                
             }).catch((error) => {
-                alert("请求失败：" + error)
+                // alert("请求失败：" + error)
             })
         },
 
@@ -177,6 +190,7 @@ export default {
         selectType(index,type){
             console.log(type)
             this.nowIndex = index;
+            this.type = type;
         },
 
         /**
@@ -229,14 +243,43 @@ export default {
          * 申请提现
          */
         confirmWithdrawal(){
+            var account = '';
+            var name = '';
             if(!this.money){
                 this.$toast('请输入提现金额')
                 return false
             }
-            let url = 'user/withdrawal';
+
+            // 支付宝
+            if(this.type == 3){
+                if(!this.alipay){
+                    this.$toast('请输入支付宝账号')
+                    return false
+                }
+                account = this.alipay;
+                name = ''
+            }
+            // 微信
+            else if(this.type == 2){
+                if(!this.wechat_account){
+                    this.$toast('请输入微信账号')
+                    return false
+                }
+                account = this.wechat_account;
+                name = ''
+            }
+            // 银行卡
+            else if(this.type == 4){
+                account = this.bankDefault;
+                name = this.bankNumber
+            }
+
+            var url = 'user/withdrawal';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
                 money:this.money,
+                account:account,
+                name:name,
                 withdraw_type:this.type
             }).then((res) => {
                 if(res.data.status == 200){

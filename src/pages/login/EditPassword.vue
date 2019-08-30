@@ -161,10 +161,12 @@ export default {
             }else if(!/^1[3456789]\d{9}$/.test(that.phone)){
                 that.$toast('请填写正确的手机号码')
                 return false
-            }else if(that.verifyCode == ''){
-                that.$toast('验证码不能为空')
-                return false
-            }else if(that.password == ''){
+            }
+            // else if(that.verifyCode == ''){
+            //     that.$toast('验证码不能为空')
+            //     return false
+            // }
+            else if(that.password == ''){
                 that.$toast('密码不能为空')
                 return false
             }else if(!/^[a-z0-9_-]{6,18}$/.test(that.password)){

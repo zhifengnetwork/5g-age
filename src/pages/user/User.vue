@@ -9,11 +9,17 @@
                 </div>
                 <div class="user-msg">
                     <!-- <p class="user-name">{{userData.realname}}</p> -->
-                    <p class="user-id">ID:{{userData.id}}</p>
+                    <p class="user-id">5G账号:{{userData.id}}</p>
                     <p class="recommender">推荐人:5623</p>
+                    <p class="level" v-if="personalData.level === 0">普通会员</p>
+                    <p class="level" v-if="personalData.level === 1">中级会员</p>
+                    <p class="level" v-if="personalData.level === 2">高级会员</p>
                     <!-- <p class="join-time">加入时间：{{userData.createtime | formatDate}}</p> -->
                 </div>
             </div>
+           
+            
+            <div class="service" @click="getService()">客服</div>
             <!-- <div class="member-msg">
                 <div class="level" v-if="personalData.level === 0">普通用户</div>
                 <div class="level" v-if="personalData.level === 1">VIP会员</div>
@@ -21,8 +27,7 @@
                 <div class="level" v-if="personalData.level === 3">高级经理</div>
                 <div class="level" v-if="personalData.level === 4">大区经理</div>
                 <div class="level" v-if="personalData.level === 5">联合创始人</div>
-            </div> -->
-            
+            </div> -->            
         </div>
         
         <div class="content">
@@ -55,7 +60,7 @@
                     <p class="number">{{userData.remainder_money}}</p>
                     <p class="sub-title">
                         <!-- <i class="icon"><img src="/static/images/user/integral-icon.png" /></i> -->
-                        <span class="text">积分</span>
+                        <span class="text">积分钱包</span>
                     </p>
                 </router-link>
                 <router-link to="/user/ProfitDetails" class="module-item" tag="div">
@@ -77,7 +82,7 @@
             </div>
             
             <div class="link-list">
-                <router-link to="#" class="link-item" tag="div">
+                <router-link to="/Sign" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/sign-in-icon.png" /></span>
                     <span class="text">签到</span>
                 </router-link>
@@ -124,9 +129,41 @@
                 <div class="link-item" @click="logout()">
                     <span class="icon"><img src="/static/images/user/login-out-icon.png" /></span>
                     <span class="text">退出登录</span>
+                </div>  
+                <div class="link-item" @click="unopen()">
+                    <span class="icon"><img src="/static/images/user/youxi@2x.png" /></span>
+                    <span class="text">游戏</span>
+                </div>  
+                <div class="link-item" @click="unopen()">
+                    <span class="icon"><img src="/static/images/user/shenghoujiaofei@2x.png" /></span>
+                    <span class="text">生活缴费</span>
+                </div>  
+                <div class="link-item" @click="unopen()">
+                    <span class="icon"><img src="/static/images/user/chengshifuwu@2x.png" /></span>
+                    <span class="text">城市服务</span>
+                </div>  
+                <div class="link-item" @click="unopen()">
+                    <span class="icon"><img src="/static/images/user/baoxian@2x.png" /></span>
+                    <span class="text">保险服务</span>
                 </div>        
+                <div class="link-item" @click="unopen()">
+                    <span class="icon"><img src="/static/images/user/huochepiao@2x.png" /></span>
+                    <span class="text">火车票机票</span>
+                </div>  
+                <div class="link-item" @click="unopen()">
+                    <span class="icon"><img src="/static/images/user/dianying@2x.png" /></span>
+                    <span class="text">电影演出赛事</span>
+                </div>  
             </div>
         </div>
+
+        <van-popup v-model="show" bind:close="onClose">
+            <div class="qrCode">
+                <img :src="this.globalUrl + qrCode" />
+                <p>扫码加好友</p>
+            </div>
+            
+        </van-popup>
 
         <!-- 底部 -->
         <Navigate></Navigate>
@@ -142,9 +179,11 @@
         },
         data() {
             return {
+                show: false,
                 userData:[],
                 personalData:[],
                 nowIndex:0,
+                qrCode:'/static/images/user/WeChat-code.jpg'
             };
         },
         created(){
@@ -191,6 +230,30 @@
             },
 
             /**
+             * 联系客服
+             */
+            getService(){
+                var url = 'user/get_service_info';
+                this.$axios.post(url,{
+                    token:this.$store.getters.optuser.Authorization
+                }).then((res) => {
+                    if(res.data.status == 200){
+                        this.qrCode = res.data.data.picture
+
+                        this.show = true;
+                    }
+                }).catch((error) => {
+
+                })
+                
+
+            },
+
+            onClose() {
+                this.setData({ show: false });
+            },
+
+            /**
              * 退出登录
              */
             logout() {
@@ -216,6 +279,13 @@
                     // on cancel
                 })
             },
+
+            /**
+             * 暂未开放
+             */
+            unopen(){
+                this.$toast("暂未开放")
+            }
         },
        
         filters: {
@@ -248,8 +318,8 @@
 <style lang="stylus" scoped>
     .User
         width 100%
-        height 100%
-        padding-bottom 114px
+        min-height 100%
+        padding-bottom 98px
         .header
             width 100%
             height 320px
@@ -278,6 +348,15 @@
                     color #ffffff
                     .join-time
                         font-size 24px
+            .service
+                width 80px
+                height 40px
+                text-align center
+                line-height 40px
+                font-size 28px
+                color #ffffff
+                border 1px solid #ffffff
+                border-radius 8px
             .member-msg
                 position absolute
                 top 85px
@@ -369,6 +448,24 @@
                     .text
                         font-size 28px
                         line-height 86px
-                   
+        .van-popup
+            background-color none
+        .qrCode
+            width 460px
+            height 460px
+            background-color #fff
+            border-radius 10px
+            overflow hidden
+            display flex
+            align-items center
+            justify-content center
+            flex-direction column
+            img 
+                width 300px
+                height 300px
+                margin-bottom 20px
+            p
+                font-size 28px
+                // line-height 60px
 
 </style>

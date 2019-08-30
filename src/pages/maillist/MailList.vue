@@ -26,6 +26,11 @@
 			</div>
 		</div>
 
+		<div class="none" v-show="userData.length == 0">
+			<img src="/static/images/public/none.png"/>
+			<p>您还没有好友哦，快去添加吧~</p>
+		</div>
+
 		<!-- 底部导航 -->
 		<Navigate></Navigate>
 	</div>
@@ -135,11 +140,11 @@ export default {
 			// console.log(e.target.innerHTML)
 			var aP = this.$refs.mailList.getElementsByTagName('p');
 			for(var i = 0;i< aP.length;i++){
-				aP[i].classList.remove("fixed");
+				// aP[i].classList.remove("fixed");
 				if(aP[i].innerHTML == e.target.innerHTML){
 					// console.log(aP[i].offsetTop)
 					var scrollTop = aP[i].offsetTop;
-					aP[i].classList.add("fixed");
+					// aP[i].classList.add("fixed");
 					document.documentElement.scrollTop = scrollTop - 53.5; 
 					document.body.scrollTop = scrollTop - 53.5; 
 				}
@@ -149,16 +154,16 @@ export default {
 		/**
 		 * 监听滚动
 		 */
-		monitorScrolling(){
-			var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-			var aP = this.$refs.mailList.getElementsByTagName('p');
-			for(var i = 0;i< aP.length;i++){
-				aP[i].classList.remove("fixed");
-				if(scrollTop >= aP[i].offsetTop - 53.5 && scrollTop < aP[i+1].offsetTop){
-					aP[i].classList.add("fixed");
-				}
-			}
-		},
+		// monitorScrolling(){
+		// 	var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		// 	var aP = this.$refs.mailList.getElementsByTagName('p');
+		// 	for(var i = 0;i< aP.length;i++){
+		// 		aP[i].classList.remove("fixed");
+		// 		if(scrollTop >= aP[i].offsetTop - 53.5 && scrollTop < aP[i+1].offsetTop){
+		// 			aP[i].classList.add("fixed");
+		// 		}
+		// 	}
+		// },
 
 		/**
 		 * 请求好友列表
@@ -241,6 +246,14 @@ export default {
 			top 50%
 			.index-item
 				line-height 40px
+	.none
+		text-align center
+		margin 150px auto
+		img
+			width 80px
+		p
+			margin 10px auto
+			font-size 24px
 					
 
 	

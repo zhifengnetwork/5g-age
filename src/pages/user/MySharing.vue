@@ -23,14 +23,14 @@
                 </div>
                 <div class="text">长按二维码保存</div>
 
-                <div class="link">{{linkUrl}}</div>
+                <!-- <div class="link">{{linkUrl}}</div>
 
                 <div class="copy-btn"
                     v-clipboard:copy="linkUrl"
                     v-clipboard:success="onCopy"
                     v-clipboard:error="onError">
                     复制邀请链接
-                </div>
+                </div> -->
 
             </div>
         </div>

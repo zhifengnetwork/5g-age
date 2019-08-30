@@ -20,6 +20,7 @@
     "swiper": "^4.5.0",
     "vant": "^2.0.9",
     "vue": "^2.5.2",
+    "vue-calendar-component": "^2.8.2",
     "vue-clipboard2": "^0.3.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.1.1"

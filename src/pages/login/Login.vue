@@ -40,7 +40,7 @@ export default {
     },
     created(){
         if(this.$store.getters.optuser.Authorization){       //返回登录页 如果有token 就返回首页
-            this.$router.push('/Home')
+            this.$router.push('/User')
         }
     },
     methods:{

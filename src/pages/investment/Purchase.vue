@@ -8,14 +8,14 @@
         <div class="content">
             <div class="purchase-list">
                 <div class="purchase-item" v-for="(item,index) in memberList" :key="index" @click="singerSelected(item)">
-                    <div class="sub-title">{{item.cardmoney}}</div>
+                    <div class="sub-title">{{item.levelname + '：'+item.cardmoney}}</div>
                     <div class="check">
                         <input type="radio" :checked="item.checked" name="cardmoney" >
                     </div>
                 </div>
             </div>
             
-            <div class="uploader">
+            <!-- <div class="uploader">
                 <van-uploader
                     v-model="fileList"
                     multiple
@@ -23,7 +23,7 @@
                     upload-text = "添加图片" 
                     />
                 <p class="vouchers">上传凭证</p>
-            </div>
+            </div> -->
 
 
             <div class="confirm-btn" @click="submitClick()">提交</div>
@@ -121,19 +121,19 @@ export default {
          * 提交
          */
         submitClick(){
-            var fileObj = this.fileList[0];
+            // var fileObj = this.fileList[0];
 
-            if(fileObj == '' || typeof(fileObj) == 'undefined'){
-                return this.$toast('亲,还没有选择上传的凭证哦!')
-            }else{
-                fileObj = this.fileList[0].content;
-            }
+            // if(fileObj == '' || typeof(fileObj) == 'undefined'){
+            //     return this.$toast('亲,还没有选择上传的凭证哦!')
+            // }else{
+            //     fileObj = this.fileList[0].content;
+            // }
 
             var url = 'pay/investmentsub';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
                 level_id:this.level_id,
-                image:fileObj
+                // image:fileObj
             }).then((res) => {
                 if(res.data.status == 200){
                     this.$toast({message:res.data.msg,duration:2000})
