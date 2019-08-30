@@ -10,10 +10,15 @@
                 <div class="user-msg">
                     <!-- <p class="user-name">{{userData.realname}}</p> -->
                     <p class="user-id">5G账号:{{userData.id}}</p>
-                    <p class="recommender">推荐人:5623</p>
-                    <p class="level" v-if="personalData.level === 0">普通会员</p>
-                    <p class="level" v-if="personalData.level === 1">中级会员</p>
-                    <p class="level" v-if="personalData.level === 2">高级会员</p>
+                    <p class="recommender" v-if="userData.first_leader == 0">推荐人:平台推荐</p>
+                    <p class="recommender" v-else>推荐人:{{userData.first_leader}}</p>
+                    
+                    <div class="level-wrap">
+                        <p class="level" v-if="personalData.level === 0">粉丝</p>
+                        <p class="level" v-if="personalData.level === 1">普通会员</p>
+                        <p class="level" v-if="personalData.level === 2">中级会员</p>
+                        <p class="level" v-if="personalData.level === 3">高级会员</p>
+                    </div>
                     <!-- <p class="join-time">加入时间：{{userData.createtime | formatDate}}</p> -->
                 </div>
             </div>
@@ -72,7 +77,7 @@
                 </router-link>
                 <router-link to="/user/WithdrawalDetails" class="module-item" tag="div">
                     <div class="link-item"> 
-                        <p class="number">{{userData.get_all_lower}}</p>
+                        <p class="number">{{userData.tixian}}</p>
                         <p class="sub-title">
                             <!-- <i class="icon"><img src="/static/images/user/money-icon1.png" /></i> -->
                             <span class="text">已提现</span>
