@@ -12,11 +12,11 @@
                 <i class="icon tel-icon"></i>
                 <input type="number" placeholder="请输入手机号" v-model="phone">
             </div>
-            <!-- <div class="form-group">
+            <div class="form-group">
                 <i class="icon verify-icon"></i>
                 <input type="text" placeholder="请输入验证码" v-model="verifyCode">
                 <button class="verifyCode" :disabled="disabled" @click="getVerifyCode()">{{verifyText}}</button>
-            </div> -->
+            </div>
             <div class="form-group">
                 <i class="icon password-icon"></i>
                 <input type="password" placeholder="请输入密码" v-model="password" >
@@ -162,10 +162,10 @@ export default {
                 that.$toast('请填写正确的手机号码')
                 return false
             }
-            // else if(that.verifyCode == ''){
-            //     that.$toast('验证码不能为空')
-            //     return false
-            // }
+            else if(that.verifyCode == ''){
+                that.$toast('验证码不能为空')
+                return false
+            }
             else if(that.password == ''){
                 that.$toast('密码不能为空')
                 return false
@@ -272,7 +272,7 @@ export default {
                 height 90px
                 line-height 90px
                 font-size 30px
-                color #f4550b  
+                color #00c5fe  
                 padding 0 24px
                 box-sizing border-box 
                 background none

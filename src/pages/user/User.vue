@@ -98,10 +98,7 @@
                     <span class="icon"><img src="/static/images/user/jlmx-icon.png" /></span>
                     <span class="text">奖励明细</span>
                 </router-link>
-                <router-link to="/user/CashWithdrawal" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/xxtx-icon.png" /></span>
-                    <span class="text">线下提现</span>
-                </router-link>
+              
                 <router-link to="/user/BankCard" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/bank-card-icon.png" /></span>
                     <span class="text">银行卡列表</span>
@@ -110,25 +107,25 @@
                     <span class="icon"><img src="/static/images/user/notice-icon1.png" /></span>
                     <span class="text">公告列表</span>
                 </router-link>
-                <router-link to="/user/Give" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/transfer-icon.png" /></span>
-                    <span class="text">申请转账</span>
-                </router-link>
                 <router-link to="/user/GiveRecord" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/zzjl-icon.png" /></span>
                     <span class="text">转账记录</span>
                 </router-link>
-                 <router-link to="/user/mySharing" class="link-item" tag="div">
-                    <span class="icon"><img src="/static/images/user/promotion-icon.png" /></span>
-                    <span class="text">我的推广</span>
+                <router-link to="/user/SetPassword" class="link-item" tag="div">
+                    <span class="icon"><img src="/static/images/user/edit-pwd-icon.png" /></span>
+                    <span class="text">支付密码</span>
                 </router-link>
                 <router-link to="/EditPassword" class="link-item" tag="div">
                     <span class="icon"><img src="/static/images/user/edit-pwd-icon.png" /></span>
                     <span class="text">修改密码</span>
                 </router-link>
-                <div class="link-item" @click="logout()">
-                    <span class="icon"><img src="/static/images/user/login-out-icon.png" /></span>
-                    <span class="text">退出登录</span>
+                <router-link to="/user/mySharing" class="link-item" tag="div">
+                    <span class="icon"><img src="/static/images/user/promotion-icon.png" /></span>
+                    <span class="text">我的推广</span>
+                </router-link>
+                <div class="link-item" @click="unopen()">
+                    <span class="icon"><img src="/static/images/user/meituan-icon.png" /></span>
+                    <span class="text">美团外卖</span>
                 </div>  
                 <div class="link-item" @click="unopen()">
                     <span class="icon"><img src="/static/images/user/youxi@2x.png" /></span>
@@ -153,6 +150,10 @@
                 <div class="link-item" @click="unopen()">
                     <span class="icon"><img src="/static/images/user/dianying@2x.png" /></span>
                     <span class="text">电影演出赛事</span>
+                </div>  
+                <div class="link-item" @click="logout()">
+                    <span class="icon"><img src="/static/images/user/login-out-icon.png" /></span>
+                    <span class="text">退出登录</span>
                 </div>  
             </div>
         </div>
