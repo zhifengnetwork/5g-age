@@ -69,7 +69,7 @@
                     </p>
                 </router-link>
                 <router-link to="/user/ProfitDetails" class="module-item" tag="div">
-                    <p class="number">{{userData.distribut_money}}</p>
+                    <p class="number">{{userData.rebate_money}}</p>
                     <p class="sub-title">
                         <!-- <i class="icon"><img src="/static/images/user/profit-icon.png" /></i> -->
                         <span class="text">总收益</span>

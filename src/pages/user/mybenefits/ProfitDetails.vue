@@ -9,14 +9,14 @@
             <div class="details-container">
                 <div class="thead">
                     <span>日期</span>
-                    <span>金额</span>
+                    <span>积分</span>
                     <span>描述</span>
                 </div>
                 <div class="record-list">
                     <div class="record-item" v-for="(item,index) in this.profitList">
                         <div class="column">{{item.create_time | formatDate}}</div>
-                        <div class="column">{{item.balance}}</div>
-                        <div class="column">{{item.bonus_from}}</div>
+                        <div class="column">{{item.bonus_from | filterMoney}}</div>
+                        <div class="column">{{item.note}}</div>
                     </div>
                 </div>
 
@@ -35,15 +35,15 @@
 import TopHeader from "@/pages/common/header/TopHeader"
 export default {
     name:'ProfitDetails',
+    components: {
+		TopHeader,
+    },
     data() {
         return {
             type:'',
             name:'',
             profitList:[]
         };
-    },
-    components: {
-		TopHeader,
     },
     created(){
         this.$store.commit('showLoading');  
@@ -55,8 +55,8 @@ export default {
            this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization
            }).then((res) => {
-               this.profitList = res.data.data;
-               this.$store.commit('hideLoading');  
+                this.profitList = res.data.data;
+                this.$store.commit('hideLoading');  
            })
         }
     },
@@ -82,6 +82,10 @@ export default {
             s = s < 10 ? ('0' + s) : s;
 
             return y + '-' + MM + '-'+ d+' '+ h +':'+ m +':'+s;
+        },
+        filterMoney:function(val){
+            var str = JSON.parse(val)
+            return str.money
         }
     },
 

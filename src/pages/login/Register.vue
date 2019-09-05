@@ -185,9 +185,9 @@ export default {
                             this.$router.push("/Login");
                         }, 1000);
                     }else{
-                        this.isClick = false;
                         this.$toast(res.data.msg) 
                     }
+                    this.isClick = false;
                 })
                 .catch((error) => {
                     this.isClick = false;

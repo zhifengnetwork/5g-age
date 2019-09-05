@@ -161,6 +161,7 @@ export default {
                     verify_code:this.verifyCode,
                     user_password:this.password,
                     confirm_password:this.password2,
+                    token:this.$store.getters.optuser.Authorization
                 })
                 .then((res)=>{
                     if(res.data.status === 200){

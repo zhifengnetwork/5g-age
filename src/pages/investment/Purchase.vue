@@ -46,6 +46,7 @@ export default {
             level_id:'',
             memberList:[], //套餐列表
             fileList: [], //上传预览图
+            isClick:false
         }
     },
 
@@ -128,6 +129,10 @@ export default {
             // }else{
             //     fileObj = this.fileList[0].content;
             // }
+            if(this.isClick){
+                return
+            }
+            this.isClick = true;
 
             var url = 'pay/investmentsub';
             this.$axios.post(url,{
@@ -149,7 +154,9 @@ export default {
                 else{
                     this.$toast(res.data.msg)
                 }
+                this.isClick = false;
             }).catch((error) => {
+                this.isClick = false;
                 alert('请求错误:' + error)
             })
             

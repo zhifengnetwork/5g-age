@@ -37,17 +37,16 @@
                 </router-link>
 
                 <!-- 微信账号信息 -->
-                <div class="account-wrap" v-show="nowIndex == 1">
+                <!-- <div class="account-wrap" v-show="nowIndex == 1">
                     <div class="account-msg">
                         <div class="input-group">
                             <input type="text" placeholder="请输入微信账号" v-model="wechat_account"/>
                         </div>
                     </div>
-                    
-                </div>
+                </div> -->
 
                 <!-- 银行卡信息 -->
-                <div class="account-wrap" v-show="nowIndex == 2 && this.bankList.length > 0" @click="bankShow()">
+                <div class="account-wrap" v-show="nowIndex == 1 && this.bankList.length > 0" @click="bankShow()">
                     <div class="account-msg">
                         <span class="name">{{bankDefault}}</span>
                         <span class="account-number">{{bankNumber}}</span>
@@ -116,7 +115,7 @@ export default {
             // 提现方式
             wayArr:[
                 {type:3,icon:'/static/images/user/alipay-icon.png'},
-                {type:2,icon:'/static/images/user/weChat-icon.png'},
+                // {type:2,icon:'/static/images/user/weChat-icon.png'},
                 {type:4,icon:'/static/images/user/bank-card.png'},
             ],
             alipay:'', //支付宝账号
