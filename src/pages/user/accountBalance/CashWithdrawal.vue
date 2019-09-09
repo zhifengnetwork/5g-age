@@ -22,7 +22,7 @@
                      @click="selectType(index,item.type)">
                         <img :src="item.icon" />
                     </div>
-                    <router-link to="/user/AddBankCard" class="add-card" tag="div"><i class="icon"></i>添加银行卡</router-link>
+                    <!-- <router-link to="/user/AddBankCard" class="add-card" tag="div"><i class="icon"></i>添加银行卡</router-link> -->
                 </div>
 
                 <!-- 支付宝账号信息 -->
@@ -116,7 +116,7 @@ export default {
             wayArr:[
                 {type:3,icon:'/static/images/user/alipay-icon.png'},
                 // {type:2,icon:'/static/images/user/weChat-icon.png'},
-                {type:4,icon:'/static/images/user/bank-card.png'},
+                // {type:4,icon:'/static/images/user/bank-card.png'},
             ],
             alipay:'', //支付宝账号
             alipayName:'', //真实姓名

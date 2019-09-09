@@ -97,7 +97,7 @@
                         this.$toast(res.data.msg)
                     }
                 }).catch((error) => {
-                    this.$toast(error)
+                    this.$toast("数据请求有误")
                 })
             },
            
